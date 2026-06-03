@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lite vs Standard — the journey, mapped (v2, validated)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+  :root{
+    --navy:#002864;--navy-60:rgba(0,40,100,.62);--navy-40:rgba(0,40,100,.42);
+    --blue:#146CFF;--blue-300:#A4C6FF;--n100:#F5F9FA;--n200:#E8EEF0;--n800:#1F4253;
+    --green:#0FA37F;--red:#ED0674;--amber:#FF6D36;--yellow:#FFD400;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:var(--navy);line-height:1.4;font-weight:400;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:48px 24px 72px;}
+  header{margin-bottom:36px;}
+  .logo{margin-bottom:28px;}
+  .eyebrow{color:var(--blue);font-weight:600;font-size:13px;margin-bottom:10px;}
+  h1{font-weight:600;line-height:1.1;font-size:33px;letter-spacing:-.01em;margin-bottom:14px;}
+  .lede{font-size:17px;color:var(--navy-60);max-width:640px;}
+  .lede b{color:var(--navy);font-weight:600;}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 22px;background:var(--n100);border:1px solid var(--n200);border-radius:10px;padding:16px 20px;margin:28px 0 8px;}
+  .legend .li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--navy-60);}
+  .swatch{width:14px;height:14px;border-radius:4px;flex:none;}
+  .sw-std{background:var(--blue);}.sw-lite{background:var(--n800);}.sw-shared{background:var(--blue-300);}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .d-green{background:var(--green);}.d-red{background:var(--red);}.d-amber{background:var(--amber);}
+  .phase{margin-top:42px;}
+  .phase-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;}
+  .phase-num{font-size:13px;font-weight:600;color:var(--blue);}
+  .phase-title{font-size:21px;font-weight:600;line-height:1.1;}
+  .phase-sub{font-size:14px;color:var(--navy-60);margin-bottom:20px;}
+  .stages{position:relative;padding-left:34px;}
+  .stages::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:var(--n200);}
+  .stage{position:relative;margin-bottom:14px;}
+  .stage::before{content:"";position:absolute;left:-29px;top:18px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--blue);}
+  .card{background:#fff;border:1px solid var(--n200);border-radius:10px;padding:16px 18px;}
+  .card .top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+  .stage-name{font-size:16px;font-weight:600;}
+  .pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .pill-shared{background:var(--blue-300);color:var(--navy);}
+  .pill-green{background:rgba(15,163,127,.14);color:var(--green);}
+  .pill-red{background:rgba(237,6,116,.12);color:var(--red);}
+  .pill-amber{background:rgba(255,109,54,.14);color:var(--amber);}
+  .rows{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;}
+  @media(max-width:560px){.rows{grid-template-columns:1fr;}}
+  .field-label{font-size:11px;font-weight:600;color:var(--navy-40);margin-bottom:2px;}
+  .field-val{font-size:13.5px;color:var(--navy);}
+  code{font-family:'Inter',sans-serif;font-weight:500;background:var(--n100);border:1px solid var(--n200);border-radius:4px;padding:1px 6px;font-size:12.5px;color:var(--navy);}
+  .divider{display:flex;align-items:center;gap:12px;margin:6px 0 16px;padding-left:34px;}
+  .divider .line{height:1px;background:var(--blue);flex:1;opacity:.3;}
+  .divider .txt{font-size:12px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  .lanes{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:560px){.lanes{grid-template-columns:1fr;}}
+  .lane{border-radius:10px;padding:18px;color:#fff;}
+  .lane-std{background:var(--blue);}.lane-lite{background:var(--n800);}
+  .lane-tag{font-size:12px;font-weight:600;opacity:.85;margin-bottom:4px;}
+  .lane-name{font-size:17px;font-weight:600;margin-bottom:12px;}
+  .lane .field-label{color:rgba(255,255,255,.6);}
+  .lane .field-val{color:#fff;}
+  .lane code{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.25);color:#fff;}
+  .lane .frow{margin-bottom:10px;}.lane .frow:last-child{margin-bottom:0;}
+  .converge{text-align:center;font-size:13px;color:var(--navy-60);margin:14px 0 4px;}
+  .resolved{border:1px solid var(--green);border-radius:10px;background:rgba(15,163,127,.06);padding:14px 16px;margin:14px 0 0;}
+  .resolved .ftag{font-size:11px;font-weight:600;color:var(--green);margin-bottom:5px;}
+  .resolved p{font-size:13.5px;color:var(--navy);}
+  .flag{border:1px dashed var(--amber);border-radius:10px;background:rgba(255,109,54,.05);padding:14px 16px;margin:14px 0 0;}
+  .flag .ftag{font-size:11px;font-weight:600;color:var(--amber);margin-bottom:5px;}
+  .flag p{font-size:13.5px;color:var(--navy);}
+  .gotchas{margin-top:42px;background:var(--n100);border:1px solid var(--n200);border-radius:10px;padding:22px 24px;}
+  .gotchas h3{font-size:15px;font-weight:600;margin-bottom:14px;}
+  .gotchas ul{list-style:none;}
+  .gotchas li{font-size:13.5px;color:var(--navy);padding:8px 0;border-top:1px solid var(--n200);line-height:1.5;}
+  .gotchas li:first-of-type{border-top:none;}
+  .gotchas b{font-weight:600;}
+  .close{margin-top:44px;background:var(--navy);color:#fff;border-radius:10px;padding:28px 26px;}
+  .close .eyebrow{color:var(--yellow);}
+  .close h2{font-size:20px;font-weight:600;line-height:1.15;margin-bottom:10px;}
+  .close p{font-size:14.5px;color:rgba(255,255,255,.8);margin-bottom:10px;}
+  .close p:last-child{margin-bottom:0;}.close b{color:#fff;font-weight:600;}
+  .foot{font-size:12px;color:var(--navy-40);margin-top:24px;line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 120" width="150" aria-label="Goodshuffle Pro">
+        <path fill="#002864" d="M42,46.9h13.2v20.8c-5.8,6.5-13.9,9.7-24.2,9.7c-8.6,0-15.9-2.9-21.7-8.6C3.4,63.2,0.5,56,0.5,47.3s3-16,8.9-21.8s13.2-8.7,21.6-8.7s15.8,2.8,22,8.3l-6.8,9.8c-2.6-2.3-5.1-3.9-7.3-4.7c-2.2-0.9-4.6-1.3-7.2-1.3c-5,0-9.2,1.7-12.6,5.1c-3.4,3.4-5.1,7.9-5.1,13.4s1.6,10,4.9,13.3s7.2,5,11.7,5S39,64.8,42,63.1V46.9z"/>
+        <path fill="#002864" d="M116.2,68.7c-5.9,5.8-13.2,8.7-21.9,8.7s-16-2.9-21.9-8.7s-8.9-13-8.9-21.6s3-15.8,8.9-21.6s13.2-8.7,21.9-8.7s16,2.9,21.9,8.7s8.9,13,8.9,21.6C125.2,55.7,122.2,62.9,116.2,68.7z M111.8,47.1c0-5.2-1.7-9.7-5-13.4c-3.4-3.7-7.5-5.5-12.4-5.5s-9,1.8-12.4,5.5s-5,8.2-5,13.4s1.7,9.7,5,13.4c3.3,3.7,7.5,5.5,12.4,5.5s9-1.8,12.4-5.5C110.1,56.8,111.8,52.4,111.8,47.1z"/>
+        <path fill="#002864" d="M185.6,68.7c-5.9,5.8-13.2,8.7-21.9,8.7s-16-2.9-21.9-8.7s-8.9-13-8.9-21.6s3-15.8,8.9-21.6s13.2-8.7,21.9-8.7s16,2.9,21.9,8.7s8.9,13,8.9,21.6S191.6,62.9,185.6,68.7z M181.2,47.1c0-5.2-1.7-9.7-5-13.4c-3.4-3.7-7.5-5.5-12.4-5.5s-9,1.8-12.4,5.5s-5,8.2-5,13.4s1.7,9.7,5,13.4c3.4,3.7,7.5,5.5,12.4,5.5s9-1.8,12.4-5.5S181.2,52.4,181.2,47.1z"/>
+        <path fill="#002864" d="M250.5,25.8c5.6,5.1,8.4,12.3,8.4,21.4s-2.7,16.4-8.2,21.7c-5.5,5.3-13.8,8-25,8h-20.1V18.1h20.7C236.8,18.1,244.9,20.7,250.5,25.8z M240.9,60.7c3.2-3,4.8-7.4,4.8-13.2s-1.6-10.2-4.8-13.3s-8.2-4.7-14.8-4.7h-7.3v35.7h8.3C233,65.2,237.6,63.7,240.9,60.7z"/>
+        <path fill="#002864" d="M419.4,29.8c-1.3,1-1.9,2.4-1.9,4.1c0,1.7,0.8,3.1,2.3,4.1s5.1,2.2,10.7,3.6c5.6,1.4,9.9,3.4,13,6.2c3.1,2.7,4.6,6.7,4.6,12s-2,9.5-5.9,12.8s-9.1,4.9-15.6,4.9c-9.3,0-17.7-3.4-25.1-10.3l7.8-9.6c6.3,5.5,12.2,8.3,17.6,8.3c2.4,0,4.3-0.5,5.7-1.6c1.4-1,2.1-2.4,2.1-4.2s-0.7-3.2-2.2-4.2s-4.3-2.1-8.7-3.1c-6.8-1.6-11.8-3.7-15-6.3s-4.7-6.7-4.7-12.3s2-9.9,6-12.9s9-4.5,15-4.5c3.9,0,7.8,0.7,11.8,2c3.9,1.3,7.3,3.2,10.2,5.7l-6.6,9.6c-5.1-3.9-10.4-5.8-15.8-5.8C422.4,28.3,420.7,28.8,419.4,29.8z"/>
+        <path fill="#002864" d="M495.7,18.1h13.1v58.7h-13.1V53.7h-23.4v23.1h-13.1V18.1h13.1v24.5h23.4V18.1z"/>
+        <path fill="#002864" d="M538.8,61.7c2.2,2.7,5.1,4.1,8.8,4.1s6.6-1.4,8.8-4.1c2.2-2.7,3.2-6.4,3.2-11.1V18.1h13.1V51c0,8.5-2.4,15.1-7.1,19.6c-4.7,4.6-10.7,6.8-18.1,6.8s-13.4-2.3-18.1-6.9c-4.7-4.6-7.1-11.1-7.1-19.6V18.1h13.1v32.4C535.5,55.2,536.6,59,538.8,61.7z"/>
+        <path fill="#002864" d="M626.7,18.1v11.5h-27.2v12.7h25.9v11.5h-25.9v23h-13.1V18.1H626.7z"/>
+        <path fill="#002864" d="M678.1,18.1v11.5h-27.2v12.7h25.9v11.5h-25.9v23h-13.1V18.1H678.1z"/>
+        <path fill="#002864" d="M689.2,76.8V18.1h13.1v47h25v11.7H689.2z"/>
+        <path fill="#002864" d="M779.2,18.1v11.7H750v12.1h26.3v11.2H750v12.2h30.2v11.6h-43.3V18.1H779.2z"/>
+        <path fill="#002864" d="M355.4,30h-42c-3.3,0-6,2.7-6,6s2.7,6,6,6h42c6.6,0,12.6,5.4,12.6,12v12c0,6.6-5.9,12-12.6,12H308v-6l-24,12l24,12v-6h47.4c13.2,0,24.6-10.8,24.6-24V54C380,40.8,368.7,30,355.4,30z"/>
+        <path fill="#002864" d="M307.4,66h42c3.3,0,6-2.7,6-6s-2.7-6-6-6h-42c-6.6,0-11.4-5.4-11.4-12V30c0-6.6,4.8-12,11.4-12H356v6l24-12L356,0v6h-48.6C294.2,6,284,16.8,284,30v12C284,55.2,294.2,66,307.4,66z"/>
+      </svg>
+    </div>
+    <div class="eyebrow">Marketing reporting · source of truth · v2 — validated against live HubSpot</div>
+    <h1>Lite vs Standard — the journey, mapped</h1>
+    <p class="lede">Every stage pinned to the <b>real HubSpot property</b> that defines it and the <b>metric you'd report</b>. The headline correction from validation: <b>Lite and Standard split at the trial stage, not at conversion</b> — so the funnel diverges earlier than the first draft assumed.</p>
+
+    <div class="legend">
+      <div class="li"><span class="swatch sw-shared"></span>Shared — both plans</div>
+      <div class="li"><span class="swatch sw-std"></span>Standard lane</div>
+      <div class="li"><span class="swatch sw-lite"></span>Lite lane</div>
+      <div class="li"><span class="dot d-green"></span>Positive</div>
+      <div class="li"><span class="dot d-amber"></span>Risk</div>
+      <div class="li"><span class="dot d-red"></span>Churn</div>
+    </div>
+    <p class="foot" style="margin-top:10px;">Baseline filter on every stage: <code>GS Account Type = Goodshuffle Company</code>. Funnel stages live on the contact <code>lifecyclestage</code>; sales stages on the deal <code>dealstage</code> in the <b>New Business Pipeline</b>.</p>
+  </header>
+
+  <!-- PHASE 1 -->
+  <section class="phase">
+    <div class="phase-head"><span class="phase-num">Phase 1</span><span class="phase-title">Prospect</span></div>
+    <p class="phase-sub">One shared funnel. <code>lifecyclestage</code> on the contact. Plan not known yet.</p>
+    <div class="stages">
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">0 · Pre-Lead</span><span class="pill pill-shared">Shared</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val"><code>lifecyclestage = subscriber</code> — labelled "Pre-Lead" in HubSpot</div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">New pre-leads (top of funnel)</div></div>
+        </div>
+      </div></div>
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">1 · Lead</span><span class="pill pill-shared">Shared</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val"><code>lifecyclestage = lead</code> · no account yet (<code>gsp_company_acct_status</code> empty)</div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">New leads this month (<code>current_lead_cohort</code>)</div></div>
+        </div>
+      </div></div>
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">2 · MQL</span><span class="pill pill-shared">Shared</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val"><code>lifecyclestage = marketingqualifiedlead</code> · trigger: <code>recent_demo_form_submitted</code> known</div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">Demo forms submitted this month</div></div>
+        </div>
+      </div></div>
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">3 · SAL</span><span class="pill pill-shared">Shared</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val"><code>lifecyclestage = salesqualifiedlead</code> — labelled "Sales <b>Accepted</b> Lead" (see gotchas)</div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">SALs accepted this month</div></div>
+        </div>
+      </div></div>
+
+    </div>
+  </section>
+
+  <!-- PHASE 2 -->
+  <section class="phase">
+    <div class="phase-head"><span class="phase-num">Phase 2</span><span class="phase-title">Sales</span></div>
+    <p class="phase-sub">Deal <code>dealstage</code> · New Business Pipeline · contact <code>lifecyclestage = opportunity</code></p>
+    <div class="stages">
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">4 · Planning</span><span class="pill pill-shared">Shared</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val">Deal stage <code>0 – Planning</code></div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">Open deals + pipeline value at stage</div></div>
+        </div>
+      </div></div>
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">5 · Qualified</span><span class="pill pill-shared">Shared</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val">Deal stage <code>1 – Qualified</code></div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">Open deals + pipeline value at stage</div></div>
+        </div>
+      </div></div>
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">6 · Prove</span><span class="pill pill-shared">Shared</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val">Deal stage <code>2 – Prove</code> · <code>first_demo_complete_contact</code> known (demo done)</div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">Demos completed this month</div></div>
+        </div>
+      </div></div>
+
+    </div>
+
+    <div class="divider"><span class="txt">↓ plan becomes known — funnel splits here</span><span class="line"></span></div>
+
+    <div class="lanes">
+      <div class="lane lane-std">
+        <div class="lane-tag">Standard lane</div>
+        <div class="lane-name">7a · Active trialist — Standard</div>
+        <div class="frow"><div class="field-label">Defined by</div><div class="field-val">Deal <code>3 – Active Trialist</code> · <code>gsp_company_acct_status = trialing</code> · <code>core_account_plan_at_last_trial_start = STANDARD</code></div></div>
+        <div class="frow"><div class="field-label">Report metric</div><div class="field-val">Standard trials started this month</div></div>
+      </div>
+      <div class="lane lane-lite">
+        <div class="lane-tag">Lite lane</div>
+        <div class="lane-name">7b · Active trialist — Lite</div>
+        <div class="frow"><div class="field-label">Defined by</div><div class="field-val">Deal <code>3 – Active Trialist</code> · <code>gsp_company_acct_status = trialing</code> · <code>core_account_plan_at_last_trial_start = LITE</code></div></div>
+        <div class="frow"><div class="field-label">Report metric</div><div class="field-val">Lite trials started this month</div></div>
+      </div>
+    </div>
+
+    <div class="resolved">
+      <div class="ftag">✓ resolved by the data — this was open question #1</div>
+      <p>Plan is recorded as early as <b>trial start</b> (<code>core_account_plan_at_first_trial_start</code> / <code>at_last_trial_start</code>), not at conversion. So trial-stage reporting must <b>already</b> split Lite vs Standard. If your monthly report splits only at conversion, the trial and conversion numbers will never tie out — that's a likely source of "the math isn't mathing."</p>
+    </div>
+  </section>
+
+  <!-- PHASE 3 -->
+  <section class="phase">
+    <div class="phase-head"><span class="phase-num">Phase 3</span><span class="phase-title">Convert</span></div>
+    <p class="phase-sub">Deal <code>Closed won</code> · <code>gsp_company_acct_status = active</code> · <code>lifecyclestage = customer</code>. Plan was already set at trial — now it's locked.</p>
+
+    <div class="lanes">
+      <div class="lane lane-std">
+        <div class="lane-tag">Standard lane</div>
+        <div class="lane-name">8a · New Standard customer</div>
+        <div class="frow"><div class="field-label">Defined by</div><div class="field-val"><code>core_account_plan = STANDARD</code> · <code>date_first_converted</code> known</div></div>
+        <div class="frow"><div class="field-label">Report metric</div><div class="field-val">New Standard customers this month</div></div>
+      </div>
+      <div class="lane lane-lite">
+        <div class="lane-tag">Lite lane</div>
+        <div class="lane-name">8b · New Lite customer</div>
+        <div class="frow"><div class="field-label">Defined by</div><div class="field-val"><code>core_account_plan = LITE</code> · <code>date_first_converted</code> known</div></div>
+        <div class="frow"><div class="field-label">Report metric</div><div class="field-val">New Lite customers this month</div></div>
+      </div>
+    </div>
+    <p class="converge"><code>core_account_plan_at_first_conversion</code> is write-once — your permanent anchor for spotting downgrades later.</p>
+  </section>
+
+  <!-- PHASE 4 -->
+  <section class="phase">
+    <div class="phase-head"><span class="phase-num">Phase 4</span><span class="phase-title">Grow &amp; retain</span></div>
+    <p class="phase-sub">Post-conversion. <code>gsp_company_acct_status</code> has five states — including two the first draft missed.</p>
+    <div class="stages">
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">9 · Lite → Standard upgrade</span><span class="pill pill-green">Positive</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val"><code>core_account_plan</code> moves <code>LITE → STANDARD</code> · runs through the separate <b>Upsell Pipeline</b></div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">Lite → Standard upgrades this month</div></div>
+        </div>
+      </div></div>
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">10 · Standard → Lite downgrade</span><span class="pill pill-amber">Watch</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val"><code>core_account_plan_at_first_conversion = STANDARD</code> but current <code>core_account_plan = LITE</code></div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">Downgrades this month</div></div>
+        </div>
+      </div></div>
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">11 · Past due</span><span class="pill pill-amber">Risk</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val"><code>gsp_company_acct_status = past_due</code> — payment failing, pre-churn</div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">Accounts past due (leading churn indicator)</div></div>
+        </div>
+      </div></div>
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">12 · Churn</span><span class="pill pill-red">Churn</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val"><code>gsp_company_acct_status = cancelled</code> · <code>effective_cancellation_date</code> known</div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">Cancellations this month (split by plan)</div></div>
+        </div>
+      </div></div>
+
+      <div class="stage"><div class="card">
+        <div class="top"><span class="stage-name">13 · Reactivate</span><span class="pill pill-green">Win-back</span></div>
+        <div class="rows">
+          <div><div class="field-label">Defined by</div><div class="field-val"><code>date_last_reactivated</code> known — but this property is flagged <b>[WIP]</b> in HubSpot</div></div>
+          <div><div class="field-label">Report metric</div><div class="field-val">Win-backs this month</div></div>
+        </div>
+      </div></div>
+
+    </div>
+
+    <div class="flag">
+      <div class="ftag">⚑ still genuinely open — this was open question #2</div>
+      <p>Reactivation isn't fuzzy because <i>you</i> missed something — the underlying property <code>date_last_reactivated</code> is literally marked <b>[WIP]</b> in HubSpot. It's unfinished. Until it's locked, any win-back number is provisional. This is a real thing to flag, not a gap in your understanding.</p>
+    </div>
+  </section>
+
+  <!-- GOTCHAS -->
+  <section class="gotchas">
+    <h3>Naming gotchas worth knowing before anyone writes a filter or query</h3>
+    <ul>
+      <li><b>"Sales Accepted Lead" ≠ its internal name.</b> The SAL stage's internal value is <code>salesqualifiedlead</code> — reads like "qualified," labelled "accepted." Easy to grab the wrong thing in a report.</li>
+      <li><b>"Most Recent Demo Complete" has a misleading name.</b> Internal name is <code>first_demo_complete_contact</code>, but it tracks the <i>most recent</i> demo, not the first. The genuine "first" version is a separate cloned property.</li>
+      <li><b>Account status has 5 values, not 3.</b> <code>active</code>, <code>trialing</code>, <code>cancelled</code>, plus <code>past_due</code> and <code>account_not_claimed</code>. Reports that only count three will silently drop accounts.</li>
+      <li><b>Multiple "0–Planning / 1–Qualified / 2–Prove" stage sets exist</b> across different pipelines (New Business, plus others ending in "Commit" or "Propose"). Always filter <code>pipeline = New Business Pipeline</code> or counts blend pipelines.</li>
+      <li><b>Use the <code>(SEGMENT)</code> versions</b> of plan/status/date properties — they sync from the platform and are the reliable source of truth.</li>
+    </ul>
+  </section>
+
+  <!-- CLOSING -->
+  <div class="close">
+    <div class="eyebrow">Where this leaves you</div>
+    <h2>Both open questions now have answers — and neither was a gap on your end.</h2>
+    <p><b>Question 1 (where does the funnel split?):</b> answered by the data — at the trial stage, not conversion. That single fact likely explains a good chunk of the reconciliation pain.</p>
+    <p><b>Question 2 (reactivation definition):</b> the property is officially [WIP] in HubSpot. It's unfinished upstream of you.</p>
+    <p>So the 30 minutes with Andrew shrinks to one decision: <b>do we standardize monthly reporting to split Lite vs Standard from the trial stage onward, and how do we treat the still-WIP reactivation metric until it's locked?</b> That's it. Everything else on this map is already defined.</p>
+  </div>
+
+  <p class="foot">
+    v2 · validated against live HubSpot (account 2801036) on June 3, 2026. Lifecycle stages, New Business Pipeline deal stages, and plan/status enumeration values pulled directly from property definitions. Reflects property structure, not record counts. The Lite/Standard split point is now confirmed at trial start. Supersedes the v1 draft.
+  </p>
+
+</div>
+</body>
+</html>
