@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>May 2026 Marketing Report — Final</title>
+<style>
+  :root{
+    --navy:#001432; --blue:#146CFF; --blue300:#A4C6FF; --green:#26D7A5;
+    --pink:#ED0674; --yellow:#FFD400; --purple:#5955F8; --orange:#FF6D36;
+    --n100:#F5F9FA; --n200:#E8EEF0; --n400:#9fb2bd; --ink:#102C39;
+    --n800:#1F4253; --n900:#102C39;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#d9e2e7;color:var(--navy);line-height:1.4;padding:32px 16px;}
+  .wrap{max-width:1040px;margin:0 auto;}
+
+  /* Legend */
+  .legend{background:#fff;border-radius:14px;padding:18px 22px;margin-bottom:24px;box-shadow:0 4px 16px rgba(0,0,0,.10);font-size:14px;}
+  .legend h2{font-size:16px;font-weight:600;margin-bottom:8px;}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:500;margin-right:8px;}
+  .real{background:rgba(38,215,165,.18);color:#0a7d5c;}
+  .pull{background:rgba(255,212,0,.25);color:#8a6d00;}
+  .gap{background:rgba(237,6,116,.14);color:#b00457;}
+  .pickup{background:rgba(237,6,116,.12);color:#b00457;}
+
+  /* Pick-up callout */
+  .pickupbox{background:#fff0f6;border:1.6px solid var(--pink);border-radius:10px;padding:12px 16px;margin-top:16px;font-size:14px;color:#8a0440;}
+  .pickupbox b{color:#8a0440;}
+  .pickupbox:before{content:"⚑ PICK UP — ";font-weight:700;color:var(--pink);}
+
+  /* Slide shell */
+  .slide{position:relative;background:#fff;border-radius:18px;padding:48px 54px 64px;margin-bottom:22px;box-shadow:0 6px 22px rgba(0,0,0,.12);min-height:430px;overflow:hidden;}
+  .slide.dark{background:var(--navy);color:#fff;}
+  .slide.blue{background:var(--blue);color:#fff;}
+  .slide.purple-bg{background:var(--purple);color:#fff;}
+  .slide.orange-bg{background:var(--orange);color:#fff;}
+
+  /* Category tags */
+  .tag{position:absolute;top:22px;right:26px;font-size:11px;font-weight:600;color:#fff;padding:5px 12px;border-radius:8px;}
+  .t-conv{background:var(--blue);} .t-pipe{background:var(--orange);} .t-ret{background:var(--pink);}
+  .t-exp{background:var(--green);color:#053b2c;} .t-strat{background:var(--purple);} .t-lite{background:var(--n800);}
+
+  /* Status pill (top-left) */
+  .status{position:absolute;top:22px;left:26px;font-size:11px;font-weight:600;padding:4px 11px;border-radius:999px;}
+  .s-real{background:rgba(38,215,165,.18);color:#0a7d5c;}
+  .s-pull{background:rgba(255,212,0,.25);color:#8a6d00;}
+  .s-gap{background:rgba(237,6,116,.14);color:#b00457;}
+
+  /* Type */
+  .eyebrow{color:var(--blue);font-weight:600;font-size:13px;letter-spacing:.2px;margin-bottom:10px;}
+  .dark .eyebrow,.blue .eyebrow,.purple-bg .eyebrow{color:var(--yellow);}
+  h1{font-size:46px;font-weight:600;line-height:1.1;letter-spacing:-.5px;}
+  h3{font-size:28px;font-weight:600;line-height:1.12;margin-bottom:8px;letter-spacing:-.3px;}
+  .sub{font-size:16px;color:#46606e;margin-bottom:22px;}
+  .dark .sub,.blue .sub{color:#bcd0dd;}
+  p,li{font-size:15.5px;}
+  ul{margin:0 0 0 4px;list-style:none;}
+  ul li{padding-left:20px;position:relative;margin-bottom:9px;}
+  ul li:before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:2px;background:var(--blue);}
+  .dark ul li:before{background:var(--yellow);}
+
+  /* Cards */
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 4px;}
+  .card{flex:1;min-width:140px;background:var(--blue);color:#fff;border-radius:14px;padding:18px 18px 16px;}
+  .card.alt{background:var(--navy);}
+  .card.gd{background:var(--green);color:#053b2c;}
+  .card.amber{background:#fff4cc;color:#7a5f00;border:1.5px dashed #d9b400;}
+  .card.red{background:#fff0f6;color:#8a0440;border:1.5px dashed var(--pink);}
+  .card.dark-card{background:var(--n800);}
+  .card .num{font-size:38px;font-weight:600;line-height:1;}
+  .card .lbl{font-size:12.5px;margin-top:7px;opacity:.92;}
+  .card .sub-num{font-size:14px;font-weight:500;margin-top:4px;opacity:.8;}
+
+  /* Grid */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;align-items:start;}
+
+  /* Table */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px;}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--n200);}
+  th{font-weight:600;background:var(--n100);}
+  td.num,th.num{text-align:right;}
+  .pos{color:#0a7d5c;font-weight:600;}
+  .neg{color:#b00457;font-weight:600;}
+  td.blank{color:#9fb2bd;font-style:italic;}
+  .verify-row td{background:#fff8e1;}
+
+  /* Bar chart */
+  .bar-wrap{margin:14px 0;}
+  .funnel-row{display:grid;grid-template-columns:140px 1fr 60px;gap:10px;align-items:center;margin-bottom:9px;font-size:14px;}
+  .bar{height:22px;border-radius:5px;background:var(--blue);display:flex;align-items:center;justify-content:flex-end;color:#fff;font-size:12px;font-weight:600;padding-right:7px;}
+
+  /* Notes / callouts */
+  .note{background:var(--n100);border-left:4px solid var(--blue);border-radius:0 10px 10px 0;padding:14px 18px;margin-top:16px;font-size:14px;}
+  .note.warn{border-left-color:var(--yellow);background:#fffbe9;}
+  .note.flag{border-left-color:var(--pink);background:#fff0f6;}
+  .note.green{border-left-color:var(--green);background:#f0fdf8;}
+  .note.dark-note{background:#0d2436;color:#cfe0ec;border-left-color:var(--yellow);}
+
+  /* Speaker notes strip */
+  .notes{background:#0d2436;color:#cfe0ec;border-radius:0 0 18px 18px;margin:-22px 0 22px;padding:16px 26px 20px;font-size:13.5px;}
+  .notes b{color:#fff;}
+
+  /* Insight card */
+  .insight{background:var(--n100);border-radius:12px;padding:16px 18px;border-top:3px solid var(--green);font-size:14px;}
+  .insight h4{font-size:13px;color:#0a7d5c;margin-bottom:6px;font-weight:600;}
+  .insight.warn{border-top-color:var(--yellow);}
+  .insight.warn h4{color:#8a6d00;}
+  .insight.pink{border-top-color:var(--pink);}
+  .insight.pink h4{color:#8a0440;}
+
+  /* Stocks & Flows diagram */
+  .flow-diagram{display:grid;gap:0;margin-top:16px;}
+  .flow-col{display:flex;flex-direction:column;gap:6px;}
+  .flow-label{font-size:11px;font-weight:600;color:var(--n400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+  .flow-box{border-radius:10px;padding:10px 12px;font-size:13px;font-weight:500;line-height:1.3;position:relative;}
+  .fb-navy{background:var(--navy);color:#fff;}
+  .fb-blue{background:var(--blue);color:#fff;}
+  .fb-green{background:var(--green);color:#053b2c;}
+  .fb-amber{background:#fff4cc;color:#7a5f00;border:1.5px dashed #d9b400;}
+  .fb-red{background:#fff0f6;color:#8a0440;border:1.5px dashed var(--pink);}
+  .fb-gray{background:var(--n200);color:var(--ink);}
+  .flow-arrow{text-align:center;color:var(--n400);font-size:18px;line-height:1;margin:2px 0;}
+  .flow-num{font-size:20px;font-weight:600;display:block;margin-bottom:2px;}
+
+  /* Sprint / timeline boxes */
+  .sprint-box{background:var(--n100);border-radius:12px;padding:16px 18px;border-top:4px solid var(--blue);}
+  .sprint-box.s2{border-top-color:var(--navy);}
+  .sprint-box.s3{border-top-color:var(--green);}
+  .sprint-box h4{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+  .sprint-box.s2 h4{color:var(--navy);}
+  .sprint-box.s3 h4{color:#0a7d5c;}
+  .sprint-box p{font-size:13px;margin-bottom:4px;}
+
+  /* Persistent slide footer */
+  .foot{position:absolute;bottom:20px;left:26px;}
+  .pg{position:absolute;bottom:20px;right:26px;font-size:12px;color:var(--n400);}
+
+  /* Misc */
+  .small{font-size:12.5px;color:#5f7884;margin-top:6px;}
+  .signal-row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:14px 0;border-bottom:1px solid var(--n200);}
+  .signal-row:last-child{border-bottom:none;}
+  .signal-badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;white-space:nowrap;margin-top:2px;}
+  .sb-blue{background:var(--blue300);color:var(--navy);}
+  .sb-orange{background:#ffe0d0;color:#7a2200;}
+  .sb-green{background:rgba(38,215,165,.2);color:#0a5c3e;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- LEGEND -->
+<div class="legend">
+  <h2>How to read this draft</h2>
+  <p style="margin-bottom:10px;">Merged final version combining the HTML narrative and PPTX v3 data. Scoreboard figures from HubSpot deals export (June 9) and Mallory's May Sales deck. Lite funnel from Mixpanel (90-day window). YTD recomputed on deal Close Date basis. <b>One item still pending: net logos (gross minus same-period churn) — confirm with Alison.</b> Workflow change-log for −42% fresh-form YoY also still open.</p>
+  <span class="pill real">● Real — pulled / sourced</span>
+  <span class="pill pull">● Pending verification</span>
+  <span class="pill gap">● Reporting gap</span>
+  <span class="pill pickup">⚑ Pick up</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 1 · COVER -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide dark">
+  <div class="eyebrow">Goodshuffle Pro · Marketing &amp; Growth</div>
+  <h1 style="margin-top:40px;">May 2026<br>Marketing report</h1>
+  <p class="sub" style="margin-top:18px;">Reporting window: May 1–31, 2026 · Prepared for leadership &amp; founders · Director: Ellen Loughlin · June 9, 2026</p>
+  <div style="margin-top:28px;display:flex;gap:32px;flex-wrap:wrap;">
+    <div style="font-size:13px;color:#8fafc0;font-weight:600;">↓ Funnel retention</div>
+    <div style="font-size:13px;color:#8fafc0;font-weight:600;">↗ Lead quantity</div>
+    <div style="font-size:13px;color:#8fafc0;font-weight:600;">◎ Lead quality</div>
+  </div>
+  <div class="foot">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 120" width="130"><g><g><g><path fill="#FFFFFF" d="M41.5,46.9h13.2v20.8c-5.8,6.5-13.9,9.7-24.2,9.7c-8.6,0-15.9-2.9-21.7-8.6C2.9,63.2,0,56,0,47.3c0-8.7,3-16,8.9-21.8c6-5.8,13.2-8.7,21.6-8.7c8.4,0,15.8,2.8,22,8.3l-6.8,9.8c-2.6-2.3-5.1-3.9-7.3-4.7c-2.2-0.9-4.6-1.3-7.2-1.3c-5,0-9.2,1.7-12.6,5.1c-3.4,3.4-5.1,7.9-5.1,13.4s1.6,10,4.9,13.3c3.3,3.3,7.2,5,11.7,5c4.5,0,8.3-0.9,11.3-2.6V46.9z"/><path fill="#FFFFFF" d="M115.7,68.7c-5.9,5.8-13.2,8.7-21.9,8.7s-16-2.9-21.9-8.7S63,55.7,63,47.1c0-8.6,3-15.8,8.9-21.6c5.9-5.8,13.2-8.7,21.9-8.7s16,2.9,21.9,8.7c5.9,5.8,8.9,13,8.9,21.6C124.7,55.7,121.7,62.9,115.7,68.7z M111.3,47.1c0-5.2-1.7-9.7-5-13.4c-3.4-3.7-7.5-5.5-12.4-5.5s-9,1.8-12.4,5.5c-3.4,3.7-5,8.2-5,13.4c0,5.2,1.7,9.7,5,13.4C84.8,64.2,89,66,93.9,66s9-1.8,12.4-5.5C109.6,56.8,111.3,52.4,111.3,47.1z"/><path fill="#FFFFFF" d="M185.1,68.7c-5.9,5.8-13.2,8.7-21.9,8.7c-8.7,0-16-2.9-21.9-8.7c-5.9-5.8-8.9-13-8.9-21.6c0-8.6,3-15.8,8.9-21.6c5.9-5.8,13.2-8.7,21.9-8.7c8.7,0,16,2.9,21.9,8.7c5.9,5.8,8.9,13,8.9,21.6C194,55.7,191.1,62.9,185.1,68.7z M180.7,47.1c0-5.2-1.7-9.7-5-13.4c-3.4-3.7-7.5-5.5-12.4-5.5s-9,1.8-12.4,5.5c-3.4,3.7-5,8.2-5,13.4c0,5.2,1.7,9.7,5,13.4c3.4,3.7,7.5,5.5,12.4,5.5s9-1.8,12.4-5.5S180.7,52.4,180.7,47.1z"/><path fill="#FFFFFF" d="M250,25.8c5.6,5.1,8.4,12.3,8.4,21.4c0,9.1-2.7,16.4-8.2,21.7c-5.5,5.3-13.8,8-25,8h-20.1V18.1h20.7C236.3,18.1,244.4,20.7,250,25.8z M240.4,60.7c3.2-3,4.8-7.4,4.8-13.2c0-5.8-1.6-10.2-4.8-13.3c-3.2-3.1-8.2-4.7-14.8-4.7h-7.3v35.7h8.3C232.5,65.2,237.1,63.7,240.4,60.7z"/></g><g><path fill="#FFFFFF" d="M418.9,29.8c-1.3,1-1.9,2.4-1.9,4.1c0,1.7,0.8,3.1,2.3,4.1s5.1,2.2,10.7,3.6c5.6,1.4,9.9,3.4,13,6.2c3.1,2.7,4.6,6.7,4.6,12c0,5.3-2,9.5-5.9,12.8c-3.9,3.3-9.1,4.9-15.6,4.9c-9.3,0-17.7-3.4-25.1-10.3l7.8-9.6c6.3,5.5,12.2,8.3,17.6,8.3c2.4,0,4.3-0.5,5.7-1.6c1.4-1,2.1-2.4,2.1-4.2c0-1.8-0.7-3.2-2.2-4.2c-1.5-1-4.3-2.1-8.7-3.1c-6.8-1.6-11.8-3.7-15-6.3c-3.2-2.6-4.7-6.7-4.7-12.3c0-5.6,2-9.9,6-12.9s9-4.5,15-4.5c3.9,0,7.8,0.7,11.8,2c3.9,1.3,7.3,3.2,10.2,5.7l-6.6,9.6c-5.1-3.9-10.4-5.8-15.8-5.8C421.9,28.3,420.2,28.8,418.9,29.8z"/><path fill="#FFFFFF" d="M495.2,18.1h13.1v58.7h-13.1V53.7h-23.4v23.1h-13.1V18.1h13.1v24.5h23.4V18.1z"/><path fill="#FFFFFF" d="M538.3,61.7c2.2,2.7,5.1,4.1,8.8,4.1s6.6-1.4,8.8-4.1c2.2-2.7,3.2-6.4,3.2-11.1V18.1h13.1V51c0,8.5-2.4,15.1-7.1,19.6c-4.7,4.6-10.7,6.8-18.1,6.8s-13.4-2.3-18.1-6.9c-4.7-4.6-7.1-19.6V18.1H535v32.4C535,55.2,536.1,59,538.3,61.7z"/><path fill="#FFFFFF" d="M626.2,18.1v11.5H599v12.7h25.9v11.5H599v23h-13.1V18.1H626.2z"/><path fill="#FFFFFF" d="M677.6,18.1v11.5h-27.2v12.7h25.9v11.5h-25.9v23h-13.1V18.1H677.6z"/><path fill="#FFFFFF" d="M688.7,76.8V18.1h13.1v47h25v11.7H688.7z"/><path fill="#FFFFFF" d="M778.7,18.1v11.7h-29.2v12.1h26.3v11.2h-26.3v12.2h30.2v11.6h-43.3V18.1H778.7z"/></g></g><g><path fill="#FFFFFF" d="M354.9,30h-42c-3.3,0-6,2.7-6,6s2.7,6,6,6h42c6.6,0,12.1,5.4,12.1,12v12c0,6.6-5.4,12-12.1,12H307v-6l-24,12l24,12v-6h47.9c13.2,0,24.1-10.8,24.1-24V54C379,40.8,368.2,30,354.9,30z"/><path fill="#FFFFFF" d="M306.9,66h42c3.3,0,6-2.7,6-6s-2.7-6-6-6h-42c-6.6,0-11.9-5.4-11.9-12V30c0-6.6,5.3-12,11.9-12H355v6l24-12L355,0v6h-48.1C293.7,6,283,16.8,283,30v12C283,55.2,293.7,66,306.9,66z"/></g></g></svg>
+  </div>
+  <div class="pg">1</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> Open with one line — "May is the first month we can read the funnel end-to-end. The headline isn't volume; it's two things in tension: the conversion engine is materially stronger, and Lite's signup flow is materially broken." Both are true simultaneously.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 2 · MAY HEADLINE / EXEC SUMMARY -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● Real — June 9 pull · Mallory confirmed</div>
+  <div class="tag t-conv">Conversion</div>
+  <div class="eyebrow">Executive summary</div>
+  <h3>The reroute proved itself — but Lite's signup flow is broken, and that's the binding constraint on the year</h3>
+  <div class="grid2" style="margin-top:18px;">
+    <ul>
+      <li><b>356 gross logos YTD</b> (net pending Alison) — 89% of the 400 combined goal in 5 months, well ahead of pace.</li>
+      <li><b>May added 71 gross:</b> Standard 34, Lite SI 18, Lite PLS 17, win-back 1, reactivation 1. Standard flat YoY; all net growth is Lite.</li>
+      <li><b>Show rate nearly doubled</b> YoY (24% → 47%). Demo engine is the strongest it's ever been.</li>
+      <li><b>T4 reroute confirmed:</b> 5–10× more T4 customers from 80% less paid form volume.</li>
+    </ul>
+    <ul>
+      <li><b>Lite signup flow: 5,104 visits → 0 paid completions.</b> The screening-form gate is the break. Until this is fixed, Lite growth is capped.</li>
+      <li><b>Verticals:</b> content = conversion. DJ/Floral/A&amp;V demo at 28–45% and convert near zero.</li>
+      <li><b>Attribution:</b> Brand Search #1 channel (34%); ~24% untracked — UTM debt is real.</li>
+      <li><b>One open item</b> before scoreboard locks: net logos (gross minus same-period churn) — confirm with Alison today.</li>
+    </ul>
+  </div>
+  <div class="pickupbox">Still open: (1) net logos — gross minus same-period churn (Alison, today). (2) Workflow change-log validating −42% fresh-form YoY claim (Mallory + Ellen).</div>
+  <div class="foot"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 120" width="110"><g><g><g><path fill="#002864" d="M42,46.9h13.2v20.8c-5.8,6.5-13.9,9.7-24.2,9.7c-8.6,0-15.9-2.9-21.7-8.6C3.4,63.2,0.5,56,0.5,47.3s3-16,8.9-21.8s13.2-8.7,21.6-8.7s15.8,2.8,22,8.3l-6.8,9.8c-2.6-2.3-5.1-3.9-7.3-4.7c-2.2-0.9-4.6-1.3-7.2-1.3c-5,0-9.2,1.7-12.6,5.1c-3.4,3.4-5.1,7.9-5.1,13.4s1.6,10,4.9,13.3s7.2,5,11.7,5S39,64.8,42,63.1V46.9z"/><path fill="#002864" d="M116.2,68.7c-5.9,5.8-13.2,8.7-21.9,8.7s-16-2.9-21.9-8.7s-8.9-13-8.9-21.6s3-15.8,8.9-21.6s13.2-8.7,21.9-8.7s16,2.9,21.9,8.7s8.9,13,8.9,21.6C125.2,55.7,122.2,62.9,116.2,68.7z M111.8,47.1c0-5.2-1.7-9.7-5-13.4c-3.4-3.7-7.5-5.5-12.4-5.5s-9,1.8-12.4,5.5s-5,8.2-5,13.4s1.7,9.7,5,13.4c3.3,3.7,7.5,5.5,12.4,5.5s9-1.8,12.4-5.5C110.1,56.8,111.8,52.4,111.8,47.1z"/><path fill="#002864" d="M185.6,68.7c-5.9,5.8-13.2,8.7-21.9,8.7s-16-2.9-21.9-8.7s-8.9-13-8.9-21.6s3-15.8,8.9-21.6s13.2-8.7,21.9-8.7s16,2.9,21.9,8.7s8.9,13,8.9,21.6S191.6,62.9,185.6,68.7z M181.2,47.1c0-5.2-1.7-9.7-5-13.4c-3.4-3.7-7.5-5.5-12.4-5.5s-9,1.8-12.4,5.5s-5,8.2-5,13.4s1.7,9.7,5,13.4c3.4,3.7,7.5,5.5,12.4,5.5s9-1.8,12.4-5.5S181.2,52.4,181.2,47.1z"/><path fill="#002864" d="M250.5,25.8c5.6,5.1,8.4,12.3,8.4,21.4s-2.7,16.4-8.2,21.7c-5.5,5.3-13.8,8-25,8h-20.1V18.1h20.7C236.8,18.1,244.9,20.7,250.5,25.8z M240.9,60.7c3.2-3,4.8-7.4,4.8-13.2s-1.6-10.2-4.8-13.3s-8.2-4.7-14.8-4.7h-7.3v35.7h8.3C233,65.2,237.6,63.7,240.9,60.7z"/></g><g><path fill="#002864" d="M419.4,29.8c-1.3,1-1.9,2.4-1.9,4.1c0,1.7,0.8,3.1,2.3,4.1s5.1,2.2,10.7,3.6c5.6,1.4,9.9,3.4,13,6.2c3.1,2.7,4.6,12,4.6,12s-2,9.5-5.9,12.8s-9.1,4.9-15.6,4.9c-9.3,0-17.7-3.4-25.1-10.3l7.8-9.6c6.3,5.5,12.2,8.3,17.6,8.3c2.4,0,4.3-0.5,5.7-1.6c1.4-1,2.1-2.4,2.1-4.2s-0.7-3.2-2.2-4.2s-4.3-2.1-8.7-3.1c-6.8-1.6-11.8-3.7-15-6.3s-4.7-6.7-4.7-12.3s2-9.9,6-12.9s9-4.5,15-4.5c3.9,0,7.8,0.7,11.8,2c3.9,1.3,7.3,3.2,10.2,5.7l-6.6,9.6c-5.1-3.9-10.4-5.8-15.8-5.8C422.4,28.3,420.7,28.8,419.4,29.8z"/><path fill="#002864" d="M495.7,18.1h13.1v58.7h-13.1V53.7h-23.4v23.1h-13.1V18.1h13.1v24.5h23.4V18.1z"/><path fill="#002864" d="M688.7,76.8V18.1h13.1v47h25v11.7H688.7z"/><path fill="#002864" d="M778.7,18.1v11.7h-29.2v12.1h26.3v11.2h-26.3v12.2h30.2v11.6h-43.3V18.1H778.7z"/></g></g><g><path fill="#002864" d="M354.9,30h-42c-3.3,0-6,2.7-6,6s2.7,6,6,6h42c6.6,0,12.1,5.4,12.1,12v12c0,6.6-5.4,12-12.1,12H307v-6l-24,12l24,12v-6h47.9c13.2,0,24.1-10.8,24.1-24V54C379,40.8,368.2,30,354.9,30z"/><path fill="#002864" d="M306.9,66h42c3.3,0,6-2.7,6-6s-2.7-6-6-6h-42c-6.6,0-11.9-5.4-11.9-12V30c0-6.6,5.3-12,11.9-12H355v6l24-12L355,0v6h-48.1C293.7,6,283,16.8,283,30v12C283,55.2,293.7,66,306.9,66z"/></g></g></svg></div>
+  <div class="pg">2</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> Lead with the two-part story — not just the scoreboard number. Reroute confirmed + Lite flow broken. The tension is: we're 86% to goal in 5 months AND the growth engine has a critical defect. Both are true. Don't bury the Lite finding.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 3 · SHARED NUMBERS TABLE (from PPTX v3) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● Confirmed — Mallory May Sales deck · June 9</div>
+  <div class="tag t-conv">Reconciliation</div>
+  <div class="eyebrow">The shared scoreboard — same metrics, same definitions</div>
+  <h3>Numbers Marketing, Sales, and CX should all be using — net logos pending Alison (churn)</h3>
+  <table style="margin-top:14px;">
+    <tr><th>Metric</th><th class="num">May '26</th><th class="num">Apr '26</th><th class="num">May '25</th><th class="num">MoM Δ</th><th class="num">YoY Δ</th></tr>
+    <tr><td>Lead quality · form submits</td><td class="num">235</td><td class="num">252</td><td class="num">415</td><td class="num neg">−17</td><td class="num neg">−180</td></tr>
+    <tr><td>&nbsp;&nbsp;↳ T1/T2 share of forms</td><td class="num pos">40%</td><td class="num">41%</td><td class="num">20%</td><td class="num neg">−1pp</td><td class="num pos">+20pp</td></tr>
+    <tr><td>&nbsp;&nbsp;↳ T4/T5 share of forms</td><td class="num">34%</td><td class="num">31%</td><td class="num">46%</td><td class="num">+3pp</td><td class="num pos">−12pp</td></tr>
+    <tr><td>Demos scheduled</td><td class="num">214</td><td class="num">177</td><td class="num">352</td><td class="num pos">+37</td><td class="num neg">−138</td></tr>
+    <tr><td>Demos completed</td><td class="num">100</td><td class="num">66</td><td class="num">84</td><td class="num pos">+34</td><td class="num pos">+16</td></tr>
+    <tr><td>&nbsp;&nbsp;↳ show rate</td><td class="num pos">47%</td><td class="num pos">37%</td><td class="num">24%</td><td class="num pos">+10pp</td><td class="num pos">+23pp</td></tr>
+    <tr><td>&nbsp;&nbsp;↳ no-show rate</td><td class="num">45%</td><td class="num">54%</td><td class="num">57%</td><td class="num pos">−9pp</td><td class="num pos">−12pp</td></tr>
+    <tr><td>New trialists · Standard</td><td class="num">47</td><td class="num">37</td><td class="num">44</td><td class="num pos">+10</td><td class="num pos">+3</td></tr>
+    <tr><td>New trialists · Lite SI</td><td class="num">31</td><td class="num">28</td><td class="num">—</td><td class="num pos">+3</td><td class="num">—</td></tr>
+    <tr><td>New trialists · Lite PLS</td><td class="num">35</td><td class="num">30</td><td class="num">—</td><td class="num pos">+5</td><td class="num">—</td></tr>
+    <tr><td>New logos · gross (deal close date)</td><td class="num">71</td><td class="num">90</td><td class="num">34</td><td class="num neg">−19</td><td class="num pos">+37</td></tr>
+    <tr><td>&nbsp;&nbsp;↳ Standard (first-time)</td><td class="num">34</td><td class="num">42</td><td class="num">31 est.</td><td class="num neg">−8</td><td class="num pos">+3</td></tr>
+    <tr><td>&nbsp;&nbsp;↳ Lite SI (first-time)</td><td class="num">18</td><td class="num">22</td><td class="num">—</td><td class="num neg">−4</td><td class="num">—</td></tr>
+    <tr><td>&nbsp;&nbsp;↳ Lite PLS (self-serve)</td><td class="num">17</td><td class="num">22</td><td class="num">—</td><td class="num neg">−5</td><td class="num">—</td></tr>
+    <tr><td>&nbsp;&nbsp;↳ Win-back + reactivation</td><td class="num">2</td><td class="num">4</td><td class="num">—</td><td class="num neg">−2</td><td class="num">—</td></tr>
+    <tr><td>New logos · net (gross − churn)</td><td class="num neg">[pending]</td><td class="num">75 est.</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+    <tr><td>Inbound conversion (form → demo)</td><td class="num pos">23%</td><td class="num">15%</td><td class="num">15% est.</td><td class="num pos">+8pp</td><td class="num pos">+8pp</td></tr>
+    <tr><td>Demo → trial</td><td class="num">51%</td><td class="num">41%</td><td class="num">60% est.</td><td class="num pos">+10pp</td><td class="num neg">−9pp</td></tr>
+    <tr><td>Trialist → won</td><td class="num">56%</td><td class="num">78%</td><td class="num">70% est.</td><td class="num neg">−22pp</td><td class="num neg">−14pp</td></tr>
+  </table>
+  <div class="note warn" style="margin-top:14px;">
+    <b>One item still open:</b> Net logos (pending Alison — same-period churn pull from CX pipeline). Everything else in this table is confirmed from Mallory's May Sales deck and the June 9 HubSpot deals export.<br>
+    <b style="color:#b00457;">Also pending:</b> Demo-form workflow change-log (Apr '25–May '26) before −42% form YoY is a public claim.
+  </div>
+  <div class="pg">3</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> This is the data-contract slide. Every number here is what we've agreed to track. The red cells aren't gaps in effort — the methodology exists (Mallory has it from April) — it just hasn't been applied to May yet. Source: SE meetings export for demos; HubSpot deal close date for logos. The −42% fresh-form YoY is directionally correct but needs workflow change-log validation before it goes to leadership.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 4 · SCOREBOARD / YTD PACE -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● Confirmed — HubSpot deals export June 9 · Mallory May deck</div>
+  <div class="tag t-conv">Conversion</div>
+  <div class="eyebrow">The scoreboard — new logos YTD</div>
+  <h3>71 gross logos in May — 356 YTD gross on deal Close Date basis. 89% of the 400 goal. Net pending Alison.</h3>
+  <div class="cards" style="margin-top:16px;">
+    <div class="card"><div class="num">34</div><div class="lbl">May Standard (deal close)</div><div class="sub-num">first-time · flat YoY</div></div>
+    <div class="card dark-card"><div class="num">35</div><div class="lbl">May Lite (18 SI + 17 PLS)</div><div class="sub-num">was 0 May '25</div></div>
+    <div class="card gd"><div class="num">71</div><div class="lbl">May total gross</div><div class="sub-num">net pending churn · +109% YoY</div></div>
+    <div class="card alt"><div class="num">356</div><div class="lbl">YTD gross logos (Jan–May)</div><div class="sub-num">deal Close Date basis · 89% of 400 goal</div></div>
+  </div>
+  <div class="grid2" style="margin-top:22px;">
+    <div>
+      <table>
+        <tr><th>May new logos by plan</th><th class="num">Gross</th><th class="num">Net</th></tr>
+        <tr><td>Standard · first-time (deal close)</td><td class="num">34</td><td class="num neg">[pending]</td></tr>
+        <tr><td>Lite · sales-influenced (SI)</td><td class="num">18</td><td class="num neg">[pending]</td></tr>
+        <tr><td>Lite · self-serve PLS</td><td class="num">17</td><td class="num neg">[pending]</td></tr>
+        <tr><td>Win-back + reactivation</td><td class="num">2</td><td class="num">—</td></tr>
+        <tr style="font-weight:600;"><td>Total new logos</td><td class="num">71</td><td class="num neg">[pending Alison]</td></tr>
+      </table>
+      <table style="margin-top:12px;">
+        <tr><th>YTD Jan–May (deal Close Date)</th><th class="num">Standard</th><th class="num">Lite</th><th class="num">Untyped</th><th class="num">Total</th></tr>
+        <tr><td>Jan</td><td class="num">29</td><td class="num">25</td><td class="num">2</td><td class="num">56</td></tr>
+        <tr><td>Feb</td><td class="num">31</td><td class="num">23</td><td class="num">5</td><td class="num">59</td></tr>
+        <tr><td>Mar</td><td class="num">23</td><td class="num">38</td><td class="num">10</td><td class="num">71</td></tr>
+        <tr><td>Apr</td><td class="num">30</td><td class="num">48</td><td class="num">12</td><td class="num">90</td></tr>
+        <tr><td>May</td><td class="num">22</td><td class="num">41</td><td class="num">9</td><td class="num">72*</td></tr>
+        <tr style="font-weight:600;"><td>YTD total</td><td class="num">139</td><td class="num">179</td><td class="num">38</td><td class="num">356</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="insight warn">
+        <h4>Two notes on these numbers</h4>
+        <b>*May shows 72 in deal export vs. 71 in Mallory's deck</b> — one deal timing difference, likely a same-day close. Confirm with Mallory which is authoritative before locking.<br><br>
+        <b>38 untyped deals YTD</b> — real closed-won deals in New Business Pipeline with no Standard/Lite flag. Reported as "unclassified" per data contract rather than assigned proportionally.
+      </div>
+      <div class="insight" style="margin-top:12px;">
+        <h4>Goal confirmed: 400 combined</h4>
+        400 goal = Standard + Lite combined (confirmed via Sales deck). At 356 gross YTD, we need 44 more in June to hit the annual run-rate. On current pace (avg 71/mo last two months), June closes it comfortably.
+      </div>
+    </div>
+  </div>
+  <div class="pg">4</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> The key framing is "2× growth story" vs. "core is flat" — both are true. Blended +109% YoY (34→71) is real. But Standard held essentially flat at 34; all net growth is the new Lite line. That's the right thesis to put in front of leadership — reroute validated, Lite additive, not cannibalizing. The 38 untyped deals are real wins; we just can't split them yet — flag it honestly rather than distributing proportionally. Net number lands after Alison's 9am sync.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 5 · LITE MOTION — BINDING CONSTRAINT (PPTX v3) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● Mixpanel — 90-day funnel</div>
+  <div class="tag t-lite">Lite motion</div>
+  <div class="eyebrow">Lite signup flow · zero completions</div>
+  <h3>5,104 visits to the Lite landing page — 0 paid completions. The screening form is the break.</h3>
+  <div class="grid2" style="margin-top:16px;">
+    <div>
+      <p style="font-size:13px;font-weight:600;color:var(--n400);margin-bottom:8px;">LITE LANDING PAGE · 90-DAY FUNNEL</p>
+      <div class="funnel-row"><span>Visited Lite LP</span><div class="bar" style="width:100%;background:var(--navy);">5,104</div><span></span></div>
+      <div class="funnel-row"><span>Submitted screening form</span><div class="bar" style="width:44%;background:var(--orange);">616 · −88%</div><span></span></div>
+      <div class="funnel-row"><span>Visited registration step</span><div class="bar" style="width:3%;background:var(--orange);">32 · −95%</div><span></span></div>
+      <div class="funnel-row"><span>Opened verification email</span><div class="bar" style="width:1%;background:var(--pink);">1</div><span></span></div>
+      <div class="funnel-row"><span>Reached payment step</span><div class="bar" style="width:0.5%;background:var(--pink);">0</div><span></span></div>
+      <p class="small" style="margin-top:10px;">Pricing page same period: <b>70 completions</b> at 2.15% conversion — the flow that works.</p>
+    </div>
+    <div>
+      <div class="insight pink">
+        <h4>Where it breaks — and why</h4>
+        584 people submitted the screening form, then disappeared before reaching registration. Two hypotheses:<br><br>
+        <b>UX fatigue:</b> Users see another form after completing screening, and abandon.<br><br>
+        <b>Technical:</b> The redirect from form to registration is slow or partially broken.<br><br>
+        Either path → kill or rethink the screening-form gate.
+      </div>
+      <div class="note green" style="margin-top:12px;">
+        <b>Pattern that works — Honeybook:</b> Quick intro questions → personalized welcome video → user is inside the product. Payment comes <em>after</em> experiencing value.
+      </div>
+    </div>
+  </div>
+  <div class="pickupbox">Fullstory confirms (June 8 — Dan): 45 visitors stuck or hesitating at the password step in real time. → Add password-step UX fix to Product sprint list immediately.</div>
+  <div class="pg">5</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> This is the most operationally urgent slide in the deck. The pricing page converts at 2.15% on the same traffic. The Lite LP converts at 0%. That's not a demand problem — it's a UX/tech problem we can fix. Tie to Product roadmap: screening form gate decision is a sprint item, not a quarterly planning item.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 6 · LITE Q3 PLAN (PPTX v3) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● Strategy — sprint planning</div>
+  <div class="tag t-lite">Lite motion</div>
+  <div class="eyebrow">Lite Q3 plan · gated content + nurture</div>
+  <h3>The fix: replace "trial now" CTA with gated content — email capture → nurture → trial-ready signal</h3>
+  <div class="grid3" style="margin-top:16px;">
+    <div class="sprint-box">
+      <h4>Sprint 3 · Jun 9–22</h4>
+      <p>Plan content offers</p>
+      <p>Asset audit (Annabelle quiz, BizPlan, Rylan checklist)</p>
+      <p>Decide vertical 1 (Balloon Decor)</p>
+    </div>
+    <div class="sprint-box s2">
+      <h4>Sprint 4 · Jun 23–Jul 6</h4>
+      <p>Creative execution</p>
+      <p>Email nurture build</p>
+      <p>Webpage CTA swap</p>
+    </div>
+    <div class="sprint-box s3">
+      <h4>Early Q3 · Jul 7 launch</h4>
+      <p>Lite LP live with gated content</p>
+      <p>Nurture sequence triggered</p>
+      <p>Measure: lift in start-of-flow</p>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:18px;">
+    <div class="note">
+      <b>Repurpose first.</b> Annabelle quiz (3-email nurture already built), 5 resource guides from 2024, Rylan partner checklist, business plan template. Net-new only where needed. Phase 1: general nurture. Phase 2: vertical-specific.
+    </div>
+    <div class="note green">
+      <b>Partner leverage:</b> Lanielle (YES Decor course) co-webinar for her students + Lite prospects. Ambassador referral path reactivation — Mallory flagged zero Q2 engagements (was healthy Q1). Pair Dominique + ambassadors.
+    </div>
+  </div>
+  <div class="pickupbox">Pending: access to event-rental marketing quiz (third-party tool) · current traffic + engagement metrics for resource pages · SEO impact of gating high-traffic organic pages.</div>
+  <div class="pg">6</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> The referral signal from June 4 is the best proof point: 13 Lite signups from a single Intercom banner ad — more than a typical $5K conference booth. The unit economics of in-product surface and partner distribution are better than paid. Phase 1 is execution-ready (assets exist); Phase 2 (vertical nurtures) is the Q3 build.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 7 · GTM FUNNEL — STOCKS & FLOWS (from PPTX v3) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● May actuals · gaps flagged</div>
+  <div class="tag t-conv">Conversion</div>
+  <div class="eyebrow">Marketing stocks &amp; flows · May 2026</div>
+  <h3>How May leads moved: form → trial → won — by marketing and sales lane</h3>
+
+  <div style="margin-top:18px;overflow-x:auto;">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;min-width:700px;">
+      <!-- Headers -->
+      <div class="flow-label" style="text-align:center;">Sourcing</div>
+      <div class="flow-label" style="text-align:center;">Qualify</div>
+      <div class="flow-label" style="text-align:center;">Demo</div>
+      <div class="flow-label" style="text-align:center;">Trial</div>
+      <div class="flow-label" style="text-align:center;">Convert</div>
+
+      <!-- Standard lane -->
+      <div class="flow-box fb-navy" style="text-align:center;"><span class="flow-num">265</span>Form submits<br><small style="opacity:.7;">Fresh + returning</small></div>
+      <div class="flow-box fb-gray" style="text-align:center;"><span class="flow-num" style="color:var(--pink);">[GAP]</span>Qualified leads<br><small>Add to export</small></div>
+      <div class="flow-box fb-blue" style="text-align:center;"><span class="flow-num">100</span>Demos completed<br><small style="opacity:.8;">Show rate 47%</small></div>
+      <div class="flow-box fb-blue" style="text-align:center;"><span class="flow-num">47</span>Trial · Std<br><small style="opacity:.8;">Annual / Monthly</small></div>
+      <div class="flow-box fb-green" style="text-align:center;"><span class="flow-num">33</span>Convert · Std<br><small>Won deals</small></div>
+
+      <!-- Reroute row -->
+      <div class="flow-box fb-amber" style="grid-column:1/3;text-align:center;padding:8px 12px;"><span style="font-weight:600;">T3/T4 rerouted</span> → skip demo → Lite trial path</div>
+      <div style="grid-column:3/4;"></div>
+      <div class="flow-box fb-amber" style="text-align:center;"><span class="flow-num" style="color:#b00457;">[?]</span>Trial · Lite (SI)</div>
+      <div class="flow-box fb-amber" style="text-align:center;"><span class="flow-num" style="color:#b00457;">[?]</span>Convert Lite (SI)</div>
+
+      <!-- PLS lane -->
+      <div class="flow-box fb-gray" style="text-align:center;"><span class="flow-num" style="font-size:14px;color:var(--ink);">5,104 + 3,258</span>LP + Pricing visits<br><small>Self-serve traffic</small></div>
+      <div style="grid-column:2/4;display:flex;align-items:center;justify-content:center;"><div class="flow-box fb-red" style="width:100%;text-align:center;"><span style="font-weight:600;color:var(--pink);">0 completions</span><br><small>Screening form breaks flow</small></div></div>
+      <div class="flow-box fb-gray" style="text-align:center;"><span class="flow-num" style="color:var(--pink);">[?]</span>Trial · Lite (PLS)</div>
+      <div class="flow-box fb-green" style="text-align:center;"><span class="flow-num" style="color:var(--pink);">[?]</span>Convert Lite (PLS)</div>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:16px;">
+    <div class="note" style="margin-top:0;font-size:13px;"><b>Marketing owns:</b> direct form conversions &lt;30d, nurture re-engagement, self-serve Lite signups (PLS lane)</div>
+    <div class="note green" style="margin-top:0;font-size:13px;"><b>Sales owns:</b> longer-cycle conversions, sales-influenced Lite (SI lane); no-show + unbooked = 96 demos lost</div>
+  </div>
+  <div class="pg">7</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> The architecture diagram. Walk left-to-right by lane: Standard (forms → demo → trial → won), Rerouted (T3/T4 → Lite SI), and PLS self-serve. The red box in the PLS lane is the critical defect — the flow that should carry marketing-owned logos is broken. The [?] cells are the Mallory verification items.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 8 · DEMO DISCIPLINE (from PPTX v3) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● SE meetings export · cross-team aligned</div>
+  <div class="tag t-conv">Funnel retention</div>
+  <div class="eyebrow">Demo discipline · show rate doubled</div>
+  <h3>Show rate nearly doubled YoY — the conversion engine is the strongest it's ever been</h3>
+  <div class="cards" style="margin-top:16px;">
+    <div class="card gd"><div class="num">100</div><div class="lbl">Demos completed · May</div><div class="sub-num">+19% YoY (vs. 84 May '25)</div></div>
+    <div class="card"><div class="num">47%</div><div class="lbl">Show rate · May</div><div class="sub-num">+23pp YoY (vs. 24% May '25)</div></div>
+    <div class="card alt"><div class="num">96</div><div class="lbl">No-shows · May</div><div class="sub-num">−52% YoY (vs. 202 May '25)</div></div>
+  </div>
+  <div class="grid2" style="margin-top:20px;">
+    <div>
+      <p style="font-size:13px;font-weight:600;color:var(--n400);margin-bottom:8px;">FIRST DEMO vs. REBOOKED · MAY</p>
+      <table>
+        <tr><th></th><th class="num">First demo</th><th class="num">Rebooked</th></tr>
+        <tr><td>Scheduled</td><td class="num">158</td><td class="num">56 (26%)</td></tr>
+        <tr><td>Completed</td><td class="num">69</td><td class="num">31 (31%)</td></tr>
+      </table>
+      <div class="note" style="margin-top:12px;font-size:13px;">
+        <b>Source switch:</b> Demos now sourced from the SE meetings export, not the form-fill complete-rate field. Old metric undercounted by ~70% because T3/T4 reroute skips deal-Prove stage. Data contract updated; Sales is aligned.
+      </div>
+    </div>
+    <div class="insight">
+      <h4>Credit chain</h4>
+      <p style="font-size:14px;margin-bottom:8px;"><b>Sales:</b> SMS-reminder sequence (Apr 22) lifted show rate 43% → 53% in first clean read.</p>
+      <p style="font-size:14px;"><b>Marketing:</b> T1+T2 share of forms 19% → 42% YoY is the upstream input — better-fit leads show up more reliably.</p>
+      <p style="font-size:14px;margin-top:8px;color:#0a7d5c;font-weight:600;">↑ Shared cross-team win.</p>
+    </div>
+  </div>
+  <div class="pg">8</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> The show rate story is the strongest single data point in the deck. This is where Marketing sourcing quality and Sales follow-up discipline compound — credit both explicitly. The 26% rebook rate (56/214 scheduled) is worth watching; ideally that number drops as first-demo completion improves.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 9 · T4 REROUTE PROOF (from PPTX v3) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● Pre/post reroute comparison</div>
+  <div class="tag t-conv">Lead quantity</div>
+  <div class="eyebrow">T4 reroute · 10× more conversions from 80% less spend</div>
+  <h3>The deliberate paid-form suppression is working — trial-first treatment delivers far more T4 customers</h3>
+  <div class="grid2" style="margin-top:16px;">
+    <div>
+      <p style="font-size:13px;font-weight:600;color:var(--n400);margin-bottom:10px;">T4 PAID FORM SUBMISSIONS</p>
+      <div class="funnel-row"><span style="font-size:13px;">Pre-reroute</span><div class="bar" style="width:100%;background:var(--n800);">~250/mo</div><span></span></div>
+      <div class="funnel-row"><span style="font-size:13px;">Post-reroute</span><div class="bar" style="width:20%;background:var(--blue);">~50/mo</div><span></span></div>
+      <p class="small">−80% paid volume into the demo path</p>
+
+      <p style="font-size:13px;font-weight:600;color:var(--n400);margin:16px 0 10px;">T4 CUSTOMERS CONVERTED</p>
+      <div class="funnel-row"><span style="font-size:13px;">Pre-reroute</span><div class="bar" style="width:20%;background:var(--n800);">1–4/mo</div><span></span></div>
+      <div class="funnel-row"><span style="font-size:13px;">Post-reroute</span><div class="bar" style="width:65%;background:var(--green);color:#053b2c;">5–13/mo</div><span></span></div>
+      <p class="small">5–10× lift from far less volume</p>
+    </div>
+    <div>
+      <div style="background:var(--n100);border-radius:12px;padding:16px 18px;font-size:14px;line-height:1.6;">
+        <p style="font-size:12px;font-weight:600;color:var(--n400);margin-bottom:10px;">CONTEXT · TENSION · JUDGMENT · NEXT STEP</p>
+        <p><b>Context:</b> Pre-reroute, T4 acquired via broad paid → demo path. Demo capacity wasted on accounts that rarely converted.</p>
+        <p style="margin-top:8px;"><b>Tension:</b> Looks like a paid-spend contraction if read on form volume only. The conversion data tells the real story.</p>
+        <p style="margin-top:8px;"><b>Judgment:</b> Thesis confirmed. T4 trial-path delivers 5–10× more customers from far less volume. Keep it.</p>
+        <p style="margin-top:8px;"><b>Next step:</b> Maintain reroute. Test extending trial-first treatment to T3 lower-fit segments. Watch T3 leakage.</p>
+      </div>
+    </div>
+  </div>
+  <div class="pg">9</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> This is the "read the form-volume drop correctly" slide. If you just look at the paid form numbers, May looks like contraction. The conversion data is the reframe. Pre-reroute we were paying to fill the demo calendar with accounts that didn't convert. Post-reroute those same accounts go straight to trial and convert at 5–10× the rate.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 10 · DEMAND QUALITY / TIER SHIFT (from PPTX v3) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-pull">● Pending workflow change-log validation</div>
+  <div class="tag t-conv">Lead quality</div>
+  <div class="eyebrow">Demand quality · the sourcing system is working</div>
+  <h3>T1+T2 share of forms up 23pp YoY — but the −42% fresh-form drop needs the workflow change-log before it's a public claim</h3>
+  <div class="cards" style="margin-top:16px;">
+    <div class="card gd"><div class="num">42%</div><div class="lbl">T1+T2 share · May</div><div class="sub-num">+23pp YoY (was 19%)</div></div>
+    <div class="card"><div class="num">24%</div><div class="lbl">T4 share · May</div><div class="sub-num">−45pp YoY (was 69%) — deliberate</div></div>
+    <div class="card alt"><div class="num">111</div><div class="lbl">New trialists (fresh) · May</div><div class="sub-num">+158% YoY (was 43)</div></div>
+  </div>
+  <div class="grid2" style="margin-top:20px;">
+    <div class="note" style="margin-top:0;">
+      <b>Context:</b> Q4 '25 reroute moved T3/T4 from forms to trial. Inbound form volume <em>should</em> be down — that's the design. The reshape is from a form-heavy funnel into a trial-heavy funnel.
+    </div>
+    <div class="note flag" style="margin-top:0;">
+      <b>Tension:</b> −42% fresh-form YoY reads as collapse if uncontextualized. Workflow change-log validation (Apr '25–May '26) is pending before this is a public claim. <b>Owner: Mallory + Ellen, this week.</b>
+    </div>
+  </div>
+  <div class="pg">10</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> The form-volume story is a perception management challenge. The numbers are good (trialists +158%, quality up 23pp) but the raw form decline reads as a miss without context. The change-log is the proof that the decline is by design, not by failure. Don't ship the −42% claim without it.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 11 · CHANNEL PERFORMANCE (from HTML) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● Logos real · spend = gap (Supermetrics join needed)</div>
+  <div class="tag t-pipe">Channel</div>
+  <div class="eyebrow">Channel performance · May logos by source</div>
+  <h3>Brand Search is the #1 logo channel — but 24% of logos are untracked, and we still can't report CPL</h3>
+  <div class="grid2" style="margin-top:14px;">
+    <div>
+      <p class="small" style="margin-bottom:10px;">May logos by attribution channel (n=71):</p>
+      <div class="funnel-row"><span>Brand Search</span><div class="bar" style="width:80%;background:var(--navy);">24 · 34%</div><span></span></div>
+      <div class="funnel-row"><span>Facebook Ads</span><div class="bar" style="width:45%;">12 · 17%</div><span></span></div>
+      <div class="funnel-row"><span>Other / untracked</span><div class="bar" style="width:62%;background:var(--pink);">17 · 24%</div><span></span></div>
+      <div class="funnel-row"><span>Direct (brand)</span><div class="bar" style="width:28%;">7 · 10%</div><span></span></div>
+      <div class="funnel-row"><span>PLG (product)</span><div class="bar" style="width:17%;background:var(--green);color:#053b2c;">4 · 6%</div><span></span></div>
+      <div class="funnel-row"><span>Google / email / social</span><div class="bar" style="width:22%;">5 · 7%</div><span></span></div>
+    </div>
+    <div>
+      <div class="insight">
+        <h4>The read</h4>
+        Marketing-sourced ≈ <b>59%</b> of May logos. Brand Search leading reinforces the SEO/brand thesis as the durable driver. PLG is 6% — already converting without a working Lite flow; that number should multiply when the signup gate is fixed.
+      </div>
+      <div class="note flag" style="margin-top:12px;font-size:13px;">
+        <b>Two gaps:</b> (1) <b>CPL/CAC</b> needs Supermetrics join (Google + Meta spend) — not available from HubSpot alone. (2) <b>24% untracked</b> — UTM/attribution standards tightening is a Q3 priority (ROAST work).
+      </div>
+    </div>
+  </div>
+  <div class="pickupbox">Pull spend by channel from Supermetrics to add CPL and blended CAC next month. And the 24% untracked is likely overstating "Other" — worth tightening UTM coverage before August reporting.</div>
+  <div class="pg">11</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> Don't report CPL/CAC numbers you can't source — flag the join as a build item instead. The PLG 6% is underreported because the Lite flow is broken; the real self-serve number is higher. Brand Search + Direct together are ~44% of logos — that's the brand moat working.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 12 · VERTICAL CONVERSION (from HTML) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● May Standard cohort</div>
+  <div class="tag t-exp" style="color:#053b2c;">Vertical</div>
+  <div class="eyebrow">Vertical strategy · content = conversion</div>
+  <h3>The verticals with MOFU/BOFU content convert — DJ, Floral, A/V demo well and convert near zero</h3>
+  <table style="margin-top:14px;">
+    <tr><th>Vertical (Standard)</th><th class="num">Forms</th><th class="num">Form→demo</th><th class="num">Converted</th><th>Signal</th></tr>
+    <tr><td>Event Production &amp; Design</td><td class="num">11</td><td class="num pos">45%</td><td class="num pos">3</td><td class="pos">Workhorse — content working</td></tr>
+    <tr><td>Event Rentals</td><td class="num">21</td><td class="num pos">33%</td><td class="num pos">2</td><td class="pos">Volume + converts</td></tr>
+    <tr><td>A/V &amp; Lighting</td><td class="num">13</td><td class="num">31%</td><td class="num">1</td><td>Priority — content gap</td></tr>
+    <tr><td>Florals</td><td class="num">18</td><td class="num">28%</td><td class="num">1</td><td class="neg">Priority — lagging</td></tr>
+    <tr><td>DJ / Entertainment</td><td class="num">7</td><td class="num">43%</td><td class="num neg">0</td><td class="neg">Priority — demos but 0 converts</td></tr>
+    <tr><td>Tenting</td><td class="num">7</td><td class="num">43%</td><td class="num neg">0</td><td>Watch — mid-funnel gap</td></tr>
+    <tr><td>Venue / Planning / Boutique</td><td class="num">34</td><td class="num">~15–29%</td><td class="num">3</td><td>Steady long tail</td></tr>
+  </table>
+  <div class="note" style="margin-top:14px;">DJ and Tenting both demo at 43% — the intent is there. 0 conversions in cohort is mid-funnel gap, not failure. The content-debt thesis holds: <b>content, not lead volume, is the unlock in Q2.</b> Two BOFU comparison pages already shipped (vs Point of Rental, vs TapGoods). Next targets: RW Elephant, IntelliEvent.</div>
+  <div class="pg">12</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> This connects directly to the DJX and content slides coming up. The data says: we have demand in DJ/Tenting, we're getting demos, and we're losing at the bottom. That's a content gap, not a traffic problem. The BOFU comparison pages are the right call — high-leverage SEO/LLM bets for priority verticals.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ACT 2 DIVIDER -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide blue" style="text-align:left;min-height:320px;display:flex;flex-direction:column;justify-content:center;">
+  <div class="eyebrow" style="color:rgba(255,255,255,.85);">The next chapter</div>
+  <h1 style="font-size:64px;margin-top:12px;">Act 2</h1>
+  <p style="color:#eaf1ff;font-size:20px;max-width:620px;margin-top:14px;line-height:1.5;">What 40 days of discovery surfaced — and where we're taking events, nurture, content, and demand.</p>
+  <div class="foot"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 120" width="110"><g><g><g><path fill="#FFFFFF" d="M41.5,46.9h13.2v20.8c-5.8,6.5-13.9,9.7-24.2,9.7c-8.6,0-15.9-2.9-21.7-8.6C2.9,63.2,0,56,0,47.3c0-8.7,3-16,8.9-21.8c6-5.8,13.2-8.7,21.6-8.7c8.4,0,15.8,2.8,22,8.3l-6.8,9.8c-2.6-2.3-5.1-3.9-7.3-4.7c-2.2-0.9-4.6-1.3-7.2-1.3c-5,0-9.2,1.7-12.6,5.1c-3.4,3.4-5.1,7.9-5.1,13.4s1.6,10,4.9,13.3c3.3,3.3,7.2,5,11.7,5c4.5,0,8.3-0.9,11.3-2.6V46.9z"/><path fill="#FFFFFF" d="M354.9,30h-42c-3.3,0-6,2.7-6,6s2.7,6,6,6h42c6.6,0,12.1,5.4,12.1,12v12c0,6.6-5.4,12-12.1,12H307v-6l-24,12l24,12v-6h47.9c13.2,0,24.1-10.8,24.1-24V54C379,40.8,368.2,30,354.9,30z"/><path fill="#FFFFFF" d="M306.9,66h42c3.3,0,6-2.7,6-6s-2.7-6-6-6h-42c-6.6,0-11.9-5.4-11.9-12V30c0-6.6,5.3-12,11.9-12H355v6l24-12L355,0v6h-48.1C293.7,6,283,16.8,283,30v12C283,55.2,293.7,66,306.9,66z"/></g></g></svg></div>
+  <div class="pg">13</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> One breath. "The first half is the scoreboard and the defect we're fixing. This is the direction." Keep Act 2 to 4 slides — direction-setters, not deep dives. The detailed decks live separately.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 14 · EVENTS / DJX (from HTML) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● FY'26 event plan</div>
+  <div class="tag t-pipe">Events</div>
+  <div class="eyebrow">Act 2 · Events</div>
+  <h3>Events are our highest-intent channel — DJX is the next committed activation, and the template for florist, A/V, inflatables</h3>
+  <div class="grid2" style="margin-top:14px;">
+    <div>
+      <ul>
+        <li><b>The reframe:</b> event ROI = vertical concentration × motion match × post-event discipline — <em>not</em> booth size.</li>
+        <li><b>Three-tier portfolio:</b> Tentpole (ARA) · Vertical-focused (NACE, NACPO, DJX) · Owned &amp; intimate (warehouse tours, dinners).</li>
+        <li><b>Proof it works:</b> NACPO closed <span class="pos">6 logos in two weeks (47% of leads)</span>. ARA underperformed by over-indexing on 30-day urgency — new window is 2–3 quarters.</li>
+      </ul>
+    </div>
+    <div class="insight">
+      <h4>DJX — committed (Q3)</h4>
+      Aug 10–13 · Atlantic City · DJ vertical (Tier 2). Aaron-led, persona-tuned booth + outreach, seminar → booth → follow-up.<br><br>
+      Engine already built: ~1,200 companies mapped, ~100 prioritized across 5 tracks, sequences ready.<br><br>
+      <b>The template for florist, A/V, and inflatables next.</b>
+    </div>
+  </div>
+  <div class="note">DJX is Q3 — lands here as "what's next" and as the first vertical show we run end-to-end on the new pre/during/post/reset playbook. Attribution tagging (UTM + discovery_via) is a blocking dependency before this show ships.</div>
+  <div class="pg">14</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> Lead with NACPO as the proof point, then DJX as the repeatable application. The 47% lead-to-logo rate at NACPO is the benchmark the team needs to beat. Note: Fullstory signal (45 visitors stuck at password step) is live confirmation that the DJ vertical has intent — they're trying to sign up and getting blocked.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 15 · NURTURE + CONTENT (from HTML, condensed) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● May 11 nurture audit + April/May content data</div>
+  <div class="tag t-ret">Nurture + Content</div>
+  <div class="eyebrow">Act 2 · Nurture revamp + content engine</div>
+  <h3>Nurture's problem is content reuse, not the writing — the conversion gap is missing MOFU/BOFU in priority verticals</h3>
+  <div class="grid2" style="margin-top:14px;">
+    <div>
+      <p style="font-size:13px;font-weight:600;color:var(--n400);margin-bottom:10px;">NURTURE STATE</p>
+      <ul>
+        <li>7 workflows, ~32+ assets. Engagement collapses after email 1–2 because <b>the same content repeats across workflows.</b></li>
+        <li><b>Pricing Page is the one healthy sequence</b> end-to-end — the model to copy.</li>
+        <li>Five fixes: de-dup · cut Consideration from 27→8 assets · cross-workflow suppression · soft exit · report at workflow level.</li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-size:13px;font-weight:600;color:var(--n400);margin-bottom:10px;">CONTENT MIX (SOCIAL · APRIL)</p>
+      <div class="funnel-row"><span>TOFU</span><div class="bar" style="width:69%;background:var(--navy);">69%</div><span></span></div>
+      <div class="funnel-row"><span>MOFU</span><div class="bar" style="width:22%;">22%</div><span></span></div>
+      <div class="funnel-row"><span>BOFU</span><div class="bar" style="width:9%;background:var(--green);color:#053b2c;">9%</div><span></span></div>
+      <div class="note flag" style="margin-top:10px;font-size:13px;">Priority verticals — DJ, Floral, A/V — have <b>zero</b> MOFU/BOFU content, and they're exactly the verticals converting near-zero. The content gap <em>is</em> the conversion gap.</div>
+    </div>
+  </div>
+  <div class="pg">15</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> Tie the vertical slide (slide 12) to this one — same thread. Two BOFU comparison pages already shipped (Point of Rental, TapGoods). Next targets: RW Elephant, IntelliEvent. The ask is MOFU/BOFU for DJ, Floral, A/V — that's the single highest-leverage content work in Q2/Q3. Nurture quickest wins: de-dup + cross-workflow suppression (no build required, just config).</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 16 · ASKS / DECISIONS (from HTML, updated) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide blue">
+  <div class="eyebrow" style="color:rgba(255,255,255,.85);">Asks / decisions needed</div>
+  <h3 style="color:#fff;">Two decisions that still unblock the build — plus two infrastructure asks</h3>
+  <ul style="margin-top:18px;">
+    <li style="font-size:16px;"><b>1. Net logos — confirm with Alison today.</b> Gross is 356 YTD / 71 May. Need same-period churn from CX pipeline to lock the net number for the scoreboard. One CX export, one number.</li>
+    <li style="font-size:16px;"><b>2. Kill the Lite screening-form gate.</b> The Mixpanel data and Fullstory sessions both confirm it's the break. Product decision — and it's Q2 scope, not Q3.</li>
+    <li style="font-size:16px;"><b>3. Approve the pipeline + spend build.</b> Deals pull for pipeline value / influence; Supermetrics join for CPL/CAC. Gets this deck to all five pillars next month.</li>
+    <li style="font-size:16px;"><b>4. Workflow change-log for −42% fresh-form YoY.</b> Ellen + Mallory check HubSpot workflow history (Apr '25–May '26) before this claim goes to leadership. Directionally correct — needs validation before it's a public number.</li>
+  </ul>
+  <div class="foot"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 120" width="110"><g><g><g><path fill="#FFFFFF" d="M354.9,30h-42c-3.3,0-6,2.7-6,6s2.7,6,6,6h42c6.6,0,12.1,5.4,12.1,12v12c0,6.6-5.4,12-12.1,12H307v-6l-24,12l24,12v-6h47.9c13.2,0,24.1-10.8,24.1-24V54C379,40.8,368.2,30,354.9,30z"/><path fill="#FFFFFF" d="M306.9,66h42c3.3,0,6-2.7,6-6s-2.7-6-6-6h-42c-6.6,0-11.9-5.4-11.9-12V30c0-6.6,5.3-12,11.9-12H355v6l24-12L355,0v6h-48.1C293.7,6,283,16.8,283,30v12C283,55.2,293.7,66,306.9,66z"/></g></g></svg></div>
+  <div class="pg">16</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> Ask #1 lands this morning from Alison — one number, and the scoreboard is fully locked. Ask #2 is Product (Brandon) — frame it as a revenue defect, not a UX nicety: 5,104 visits, 0 paid completions, pricing page converts at 2.15% on the same traffic. Asks #3 and #4 are the path to a deck leadership can act on without caveats every month.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- APPENDIX DIVIDER -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide purple-bg" style="text-align:left;min-height:280px;display:flex;flex-direction:column;justify-content:center;">
+  <div class="eyebrow" style="color:rgba(255,255,255,.8);">Appendix</div>
+  <h1 style="font-size:52px;margin-top:10px;">Buyer personas</h1>
+  <p style="color:#eee;font-size:18px;max-width:580px;margin-top:14px;">The shared GTM language behind the content, nurture, and event motions.</p>
+  <div class="foot"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 120" width="110"><g><g><g><path fill="#FFFFFF" d="M354.9,30h-42c-3.3,0-6,2.7-6,6s2.7,6,6,6h42c6.6,0,12.1,5.4,12.1,12v12c0,6.6-5.4,12-12.1,12H307v-6l-24,12l24,12v-6h47.9c13.2,0,24.1-10.8,24.1-24V54C379,40.8,368.2,30,354.9,30z"/><path fill="#FFFFFF" d="M306.9,66h42c3.3,0,6-2.7,6-6s-2.7-6-6-6h-42c-6.6,0-11.9-5.4-11.9-12V30c0-6.6,5.3-12,11.9-12H355v6l24-12L355,0v6h-48.1C293.7,6,283,16.8,283,30v12C283,55.2,293.7,66,306.9,66z"/></g></g></svg></div>
+  <div class="pg">17</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> Optional — pull up only if leadership wants the "who" behind the strategy. The full 44-slide journey-map deck lives separately.</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 18 · PERSONAS TABLE (from HTML) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="status s-real">● GSP sales data — sanity-check vs current</div>
+  <div class="tag t-strat">Personas</div>
+  <div class="eyebrow">Appendix · five personas at a glance</div>
+  <h3>Five personas — and the strategic fork they pose: fix Betty's conversion rate, or go get more Todds and Colettes?</h3>
+  <table style="margin-top:14px;">
+    <tr><th>Persona</th><th>Who they are</th><th class="num">Accounts</th><th class="num">Conversion</th><th class="num">Avg deal</th><th>Best fit</th></tr>
+    <tr><td><b>Betty</b></td><td>Inspired solopreneur — small creative / rental, first-time buyer</td><td class="num">3,547</td><td class="num neg">14.7%</td><td class="num">$137</td><td>Standard (entry)</td></tr>
+    <tr><td><b>Jasmine</b></td><td>Solo operator — home-based décor, needs to feel legit</td><td class="num">Lite</td><td class="num">PLG</td><td class="num">—</td><td>Lite / PLG</td></tr>
+    <tr><td><b>Todd</b></td><td>Traditional operator — tents, inflatables, party</td><td class="num">1,074</td><td class="num pos">33.5%</td><td class="num">$172</td><td>Standard</td></tr>
+    <tr><td><b>Colette</b></td><td>Creative empire builder — multi-service, departments</td><td class="num">882</td><td class="num pos">32.0%</td><td class="num pos">$225</td><td>Standard · multi-user</td></tr>
+    <tr><td><b>Aaron</b></td><td>Tech-savvy operator — A/V, DJ, entertainment, gear</td><td class="num">835</td><td class="num">24.4%</td><td class="num">$182</td><td>Standard</td></tr>
+  </table>
+  <div class="note" style="margin-top:16px;">The fork: <b>fix Betty's conversion</b> (huge volume, weakest rate — big upside if we move it) <b>or go get more Todds and Colettes</b> (fewer, but they convert 2×+ and Colette is the highest-value seat). Naming that trade-off is what turns personas into a strategy.</div>
+  <div class="pg">18</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 19 · PERSONA → MOTION MAP (from HTML) -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="slide">
+  <div class="tag t-strat">Personas</div>
+  <div class="eyebrow">Appendix · personas → Act 2 motions</div>
+  <h3>Each persona maps to a motion we're already building — this is the connective tissue</h3>
+  <table style="margin-top:14px;">
+    <tr><th>Persona</th><th>Act 2 motion</th><th>Why</th></tr>
+    <tr><td><b>Aaron + Todd</b></td><td>Events / DJX</td><td>Trade-show personas — Atlantic City is their room. High intent, need proof in person.</td></tr>
+    <tr><td><b>Jasmine</b></td><td>Lite PLG + activation nurture</td><td>First-quote win. Fix the signup flow → she's the biggest Lite unlock.</td></tr>
+    <tr><td><b>Betty</b></td><td>Conversion-fix nurture</td><td>Highest volume, weakest rate. Biggest single lever if we move it even a few points.</td></tr>
+    <tr><td><b>Colette</b></td><td>Trust-first content + expansion</td><td>Implementation proof, references, multi-dept fit. Highest avg deal value.</td></tr>
+  </table>
+  <div class="insight" style="margin-top:20px;">
+    <h4>Why this connects everything</h4>
+    Personas are the connective tissue of Act 2. They tell the <b>content engine</b> what to say at each stage, the <b>nurture flows</b> whom to suppress and escalate, and <b>events</b> which booth message lands. Same language across Marketing, Sales, and CX.
+  </div>
+  <div class="pg">19</div>
+</div>
+<div class="notes"><b>Speaker notes:</b> Close the loop — this is the slide that shows Act 2 isn't four separate ideas, it's one system organized around how these five buyers actually move. DJX = Aaron + Todd. Lite fix = Jasmine. Nurture revamp = Betty. Content engine = Colette.</div>
+
+</div><!-- /.wrap -->
+</body>
+</html>
