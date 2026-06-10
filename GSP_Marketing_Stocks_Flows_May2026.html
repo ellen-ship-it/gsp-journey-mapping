@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSP Marketing Stocks & Flows — May 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #001432;
+    --blue: #146CFF;
+    --blue-light: #E8F0FF;
+    --blue-mid: #A4C6FF;
+    --green: #065F46;
+    --green-light: #ECFDF5;
+    --green-mid: #26D7A5;
+    --green-border: #6EE7B7;
+    --purple: #4C1D95;
+    --purple-light: #EDE9FE;
+    --purple-border: #A78BFA;
+    --purple-mid: #7C3AED;
+    --red: #991B1B;
+    --red-light: #FEF2F2;
+    --red-border: #FCA5A5;
+    --red-bright: #DC2626;
+    --amber: #B45309;
+    --amber-light: #FEF9C3;
+    --amber-border: #FDE047;
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-400: #9CA3AF;
+    --gray-600: #6B7280;
+    --gray-800: #1F2937;
+    --text: #111827;
+    --text-muted: #6B7280;
+    --text-light: #9CA3AF;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #F5F9FA;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--navy);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 52px;
+  }
+  .nav-brand {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.02em;
+    margin-right: 32px;
+    white-space: nowrap;
+  }
+  .nav-brand span { color: var(--blue-mid); }
+  .nav-tabs { display: flex; gap: 0; height: 52px; }
+  .nav-tab {
+    padding: 0 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    border: none;
+    background: none;
+    height: 52px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .nav-tab:hover { color: rgba(255,255,255,0.85); }
+  .nav-tab.active { color: white; border-bottom-color: var(--blue); }
+  .nav-meta {
+    margin-left: auto;
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+  }
+
+  /* ── SLIDE WRAPPER ── */
+  .slide { display: none; padding: 32px; max-width: 1100px; margin: 0 auto; }
+  .slide.active { display: block; }
+
+  /* ── SLIDE HEADER ── */
+  .slide-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .slide-title {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .slide-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); }
+  .leg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ── STAGE HEADERS ── */
+  .stage-row {
+    display: grid;
+    grid-template-columns: 130px 16px 1fr 16px 1fr 16px 1fr 16px 1fr;
+    gap: 0;
+    margin-bottom: 6px;
+  }
+  .stage-head {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-align: center;
+    padding: 0 4px;
+  }
+  .stage-head.wide { grid-column: span 3; }
+  .stage-divider {
+    border: none;
+    border-top: 1px dashed var(--gray-200);
+    margin-bottom: 12px;
+  }
+
+  /* ── FUNNEL GRID ── */
+  .funnel-grid {
+    display: flex;
+    gap: 0;
+    align-items: flex-start;
+  }
+  .channels-col {
+    width: 130px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 4px;
+  }
+  .channels-label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 2px;
+  }
+  .channel-chip {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 5px 8px;
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    border: 0.5px solid;
+    line-height: 1.3;
+  }
+  .channel-chip:hover { opacity: 0.82; transform: translateY(-1px); }
+  .channel-chip .pct { font-size: 9.5px; font-weight: 400; }
+
+  .connector-col {
+    width: 16px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: stretch;
+  }
+  .connector-line {
+    width: 1px;
+    margin: 0 auto;
+    background: var(--gray-200);
+    align-self: stretch;
+  }
+
+  .lanes-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .lane { margin-bottom: 0; }
+  .lane-label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
+  .lane-divider {
+    border: none;
+    border-top: 1px dashed var(--purple-border);
+    margin: 14px 0;
+    opacity: 0.4;
+  }
+
+  /* ── NODE ROW ── */
+  .node-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .node-box {
+    flex: 1;
+    border-radius: 10px;
+    border: 0.5px solid;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.12s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    position: relative;
+    min-height: 90px;
+  }
+  .node-box:hover { opacity: 0.85; transform: translateY(-1px); }
+  .node-title { font-size: 10.5px; font-weight: 600; line-height: 1.3; margin-bottom: 2px; }
+  .node-num { font-size: 26px; font-weight: 600; line-height: 1.05; margin-bottom: 3px; }
+  .node-sub { font-size: 9.5px; line-height: 1.4; opacity: 0.8; }
+  .node-std { background: var(--blue-light); border-color: #93C5FD; color: #1E40AF; }
+  .node-std .node-num { color: var(--blue); }
+  .node-won { background: var(--green-light); border-color: var(--green-border); color: var(--green); }
+  .node-won .node-num { color: #059669; }
+  .node-lite { background: var(--purple-light); border-color: var(--purple-border); color: var(--purple); }
+  .node-lite .node-num { color: var(--purple-mid); }
+  .node-break { background: var(--red-light); border-color: var(--red-border); color: var(--red); }
+  .node-break .node-num { color: var(--red-bright); }
+  .node-gray { background: var(--gray-100); border-color: var(--gray-200); color: var(--gray-600); }
+  .node-new { background: #ECFDF5; border-color: #34D399; color: var(--green); }
+  .node-new .node-num { color: #059669; font-size: 16px; }
+  .badge {
+    position: absolute;
+    top: -9px;
+    right: 10px;
+    font-size: 8.5px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 10px;
+    letter-spacing: 0.04em;
+  }
+  .badge-break { background: var(--red-bright); color: white; }
+  .badge-new { background: #059669; color: white; }
+
+  /* ── ARROWS ── */
+  .arrow {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    width: 20px;
+    flex-shrink: 0;
+  }
+  .arrow-line {
+    height: 2px;
+    width: 100%;
+    background: var(--gray-200);
+    position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: -3px;
+    border-left: 6px solid var(--gray-200);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+  .arrow-blue .arrow-line { background: #93C5FD; }
+  .arrow-blue .arrow-line::after { border-left-color: #93C5FD; }
+  .arrow-lite .arrow-line { background: var(--purple-border); }
+  .arrow-lite .arrow-line::after { border-left-color: var(--purple-border); }
+  .arrow-break .arrow-line { background: var(--red-border); }
+  .arrow-break .arrow-line::after { border-left-color: var(--red-border); }
+  .arrow-green .arrow-line { background: #34D399; }
+  .arrow-green .arrow-line::after { border-left-color: #34D399; }
+  .arrow-faded .arrow-line { opacity: 0.35; }
+
+  /* ── DETAIL PANEL ── */
+  .detail-panel {
+    display: none;
+    background: white;
+    border-radius: 10px;
+    border: 0.5px solid var(--gray-200);
+    padding: 14px 16px;
+    margin-top: 12px;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: relative;
+  }
+  .detail-panel.open { display: block; }
+  .detail-panel strong { color: var(--text); font-weight: 600; }
+  .detail-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    cursor: pointer;
+    color: var(--text-light);
+    font-size: 14px;
+    line-height: 1;
+    background: none;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .detail-close:hover { background: var(--gray-100); }
+  .detail-title { font-weight: 600; color: var(--text); font-size: 13px; margin-bottom: 6px; }
+
+  /* ── FOOTNOTE ── */
+  .footnote {
+    font-size: 10.5px;
+    color: var(--text-light);
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 0.5px solid var(--gray-200);
+    line-height: 1.6;
+  }
+  .footnote strong { color: var(--text-muted); font-weight: 600; }
+
+  /* ── UPLIFT BAR ── */
+  .uplift-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: white;
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    border: 0.5px solid var(--gray-200);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .uplift-item { flex: 1; text-align: center; }
+  .uplift-num { font-size: 22px; font-weight: 600; color: var(--text); }
+  .uplift-label { font-size: 10px; color: var(--text-light); margin-top: 2px; }
+  .uplift-arrow { font-size: 18px; color: var(--gray-200); flex-shrink: 0; padding: 0 8px; }
+  .uplift-red { color: var(--red-bright); }
+  .uplift-green { color: #059669; }
+
+  /* ── SPRINT BAR ── */
+  .sprint-bar {
+    background: #F0FDF4;
+    border: 0.5px solid var(--green-mid);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 11px;
+    color: var(--green);
+    line-height: 1.6;
+    margin-top: 16px;
+  }
+  .sprint-bar strong { font-weight: 600; }
+
+  /* ── TALKING POINTS PANEL ── */
+  .talking-points {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-top: 20px;
+  }
+  .tp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+  }
+  .tp-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue-mid);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .tp-toggle {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .tp-toggle:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
+  .tp-body { display: none; margin-top: 14px; }
+  .tp-body.open { display: block; }
+  .tp-section { margin-bottom: 14px; }
+  .tp-section-title {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--blue-mid);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .tp-text {
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+  .tp-qa {
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-top: 8px;
+  }
+  .tp-q { font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+  .tp-a { font-size: 11.5px; color: rgba(255,255,255,0.65); line-height: 1.65; }
+
+  /* ── TITLE SLIDE ── */
+  .title-slide {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 48px 56px;
+    margin-bottom: 20px;
+    min-height: 320px;
+  }
+  .title-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    color: #378ADD;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .title-h1 { font-size: 48px; font-weight: 600; color: white; line-height: 1.0; margin-bottom: 10px; }
+  .title-sub { font-size: 18px; color: #A5C8F4; margin-bottom: 36px; line-height: 1.3; }
+  .title-pills { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 32px; }
+  .title-pill {
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+  }
+  .pill-red { background: #C2185B; }
+  .pill-green { background: #00796B; }
+  .pill-amber { background: #F9A825; }
+  .title-body { font-size: 14px; color: #C8DAEE; line-height: 1.75; }
+  .title-body strong { color: white; font-weight: 600; }
+  .title-footer { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 32px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">Goodshuffle <span>Pro</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSlide('intro')">Overview</button>
+    <button class="nav-tab" onclick="showSlide('current')">Current state</button>
+    <button class="nav-tab" onclick="showSlide('future')">Future state</button>
+  </div>
+  <div class="nav-meta">Marketing &amp; Growth · May 2026 · Ellen Loughlin</div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 0 — INTRO -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="slide active" id="slide-intro">
+  <div class="title-slide">
+    <div class="title-eyebrow">Goodshuffle Pro · Marketing &amp; Growth · May 2026</div>
+    <div class="title-h1">Marketing stocks &amp; flows</div>
+    <div class="title-sub">How May leads moved — and where the funnel breaks</div>
+    <div class="title-pills">
+      <div class="title-pill pill-red">↓ Funnel retention</div>
+      <div class="title-pill pill-green">↑ Lead quantity</div>
+      <div class="title-pill pill-amber">◎ Lead quality</div>
+    </div>
+    <div class="title-body">
+      <strong>Two lanes. One working, one broken.</strong><br>
+      Channel sources → Standard funnel → conversion working well.<br>
+      Channel sources → Lite PLS funnel → screening-form gate → zero paid completions.<br>
+      Fix is in flight. The next two slides show where we are and where we're going.
+    </div>
+    <div class="title-footer">Ellen Loughlin · Director, Marketing &amp; Growth · June 2026</div>
+  </div>
+
+  <div class="talking-points">
+    <div class="tp-header" onclick="toggleTP('tp-intro')">
+      <div class="tp-title">Talk track — opening frame</div>
+      <button class="tp-toggle" id="btn-tp-intro">Show ▾</button>
+    </div>
+    <div class="tp-body" id="tp-intro">
+      <div class="tp-section">
+        <div class="tp-section-title">Lead with the frame, not the data</div>
+        <div class="tp-text">"Before I walk you through the numbers, I want to give you the structure. Marketing sources leads through two lanes — Standard and Lite. The Standard lane is working. The Lite self-serve lane has a structural break in it that we've identified and are fixing.
+
+These two slides show you the current state — with the break called out explicitly — and the future state, which is what Q3 looks like when the fix ships.
+
+Everything you're about to see is on a gross new logos basis — first invoice paid, HubSpot close date. That's the number marketing controls. Downstream retention past the second invoice is a CX metric, and Alison owns that. Until we land on a shared cross-functional definition, I'm reporting what I can defend from first principles."</div>
+      </div>
+      <div class="tp-qa">
+        <div class="tp-q">If asked: "Why are your numbers different from Mallory's?"</div>
+        <div class="tp-a">Mallory reports 'held to 2nd invoice' — a stricter gate that filters for accounts that cleared their second billing cycle. That's a CX retention signal, and it's the right metric for Sales to track. My number is gross — first invoice paid. Both are real. They measure different things at different points in the funnel. The reconciliation is in progress and we'll land on one shared definition.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 1 — CURRENT STATE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-current">
+  <div class="slide-eyebrow" style="color:var(--blue)">Marketing · stocks &amp; flows · May 2026</div>
+  <div class="slide-title">Current state — where the funnel breaks</div>
+  <div class="slide-sub">Click any node or channel for detail.</div>
+
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--blue-light);border:0.5px solid #93C5FD"></div>Standard lane</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--purple-light);border:0.5px solid var(--purple-border)"></div>Lite PLS lane</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--green-light);border:0.5px solid var(--green-border)"></div>Converted</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--red-light);border:0.5px solid var(--red-border)"></div>Break / zero</div>
+  </div>
+
+  <div id="detail-panel-1" class="detail-panel">
+    <button class="detail-close" onclick="closeDetail(1)">✕</button>
+    <div class="detail-title" id="detail-title-1"></div>
+    <div id="detail-body-1"></div>
+  </div>
+
+  <div style="margin-bottom:8px;display:flex;gap:0;padding-left:146px">
+    <div style="flex:1;font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-light);text-align:center">Entry point</div>
+    <div style="width:20px"></div>
+    <div style="flex:1;font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-light);text-align:center">Qualify / demo</div>
+    <div style="width:20px"></div>
+    <div style="flex:1;font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-light);text-align:center">Trial</div>
+    <div style="width:20px"></div>
+    <div style="flex:1;font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-light);text-align:center">Convert</div>
+  </div>
+  <div class="stage-divider"></div>
+
+  <div class="funnel-grid">
+    <div class="channels-col">
+      <div class="channels-label">Channels</div>
+      <div class="channel-chip" style="background:white;border-color:var(--gray-200);color:var(--text)" onclick="showDetail(1,'brand')">Brand Search<br><span class="pct">Std 34% · Lite 24%</span></div>
+      <div class="channel-chip" style="background:#EEF2FF;border-color:#A5B4FC;color:#3730A3" onclick="showDetail(1,'fb')">Facebook Ads<br><span class="pct">Std 17% · Lite 18%</span></div>
+      <div class="channel-chip" style="background:var(--gray-100);border-color:var(--gray-200);color:var(--gray-600)" onclick="showDetail(1,'direct')">Direct (brand)<br><span class="pct">Std 10% · Lite 8%</span></div>
+      <div class="channel-chip" style="background:#FEF9C3;border-color:#FDE047;color:#713F12" onclick="showDetail(1,'google')">Google (Industry)<br><span class="pct">Std 7% · Lite 4%</span></div>
+      <div class="channel-chip" style="background:var(--gray-100);border-color:var(--gray-200);color:var(--text-light)" onclick="showDetail(1,'other')">Other / untracked<br><span class="pct">Std 24% · Lite ~30%</span></div>
+    </div>
+    <div class="connector-col"><div class="connector-line"></div></div>
+    <div class="lanes-col">
+      <div class="lane">
+        <div class="lane-label" style="color:var(--blue)">Standard lane</div>
+        <div class="node-row">
+          <div class="node-box node-std" onclick="showDetail(1,'form')">
+            <div class="node-title">Form submits</div>
+            <div class="node-num">~235</div>
+            <div class="node-sub">Fresh + returning<br>T1/T2 = 40%</div>
+          </div>
+          <div class="arrow arrow-blue"><div class="arrow-line"></div></div>
+          <div class="node-box node-std" onclick="showDetail(1,'demo')">
+            <div class="node-title">Demo completed</div>
+            <div class="node-num">100</div>
+            <div class="node-sub">47% show rate<br>+23pp YoY</div>
+          </div>
+          <div class="arrow arrow-blue"><div class="arrow-line"></div></div>
+          <div class="node-box node-std" onclick="showDetail(1,'trial-std')">
+            <div class="node-title">Trial · Standard</div>
+            <div class="node-num">47</div>
+            <div class="node-sub">37 sales-led<br>10 self-serve</div>
+          </div>
+          <div class="arrow arrow-blue"><div class="arrow-line"></div></div>
+          <div class="node-box node-won" onclick="showDetail(1,'won-std')">
+            <div class="node-title">Converted</div>
+            <div class="node-num">33–34</div>
+            <div class="node-sub">Gross new logos<br>HubSpot close date</div>
+          </div>
+        </div>
+      </div>
+      <div class="lane-divider"></div>
+      <div class="lane">
+        <div class="lane-label" style="color:var(--purple-mid)">Lite PLS lane (self-serve)</div>
+        <div class="node-row">
+          <div class="node-box node-lite" onclick="showDetail(1,'lite-entry')">
+            <div class="node-title">LP + Pricing visits</div>
+            <div class="node-num">8,362</div>
+            <div class="node-sub">5,104 Lite LP<br>3,258 Pricing page</div>
+          </div>
+          <div class="arrow arrow-break"><div class="arrow-line"></div></div>
+          <div class="node-box node-break" onclick="showDetail(1,'break')">
+            <span class="badge badge-break">BREAK</span>
+            <div class="node-title">Signup flow</div>
+            <div class="node-num">0</div>
+            <div class="node-sub">Screening-form gate<br>kills all completions</div>
+          </div>
+          <div class="arrow arrow-lite arrow-faded"><div class="arrow-line" style="border-top:2px dashed var(--purple-border);height:0;background:none"></div></div>
+          <div class="node-box node-gray" onclick="showDetail(1,'trial-lite')">
+            <div class="node-title">Trial · Lite PLS</div>
+            <div class="node-num">~50</div>
+            <div class="node-sub">Via Pricing page<br>not broken LP</div>
+          </div>
+          <div class="arrow arrow-lite"><div class="arrow-line"></div></div>
+          <div class="node-box node-lite" onclick="showDetail(1,'won-lite')">
+            <div class="node-title">Converted</div>
+            <div class="node-num">22</div>
+            <div class="node-sub">Gross new logos<br>HubSpot close date</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <strong>Conversion definition:</strong> Gross new logos — first invoice paid, HubSpot deal close date basis. Sales reporting uses 'held to 2nd invoice' (57 total May vs. 71 gross here) — cross-functional definition reconciliation in progress. &nbsp;<strong>Channel splits:</strong> HubSpot logo attribution. ~24% Standard / ~30% Lite logos untracked — UTM standardisation Q3 priority.
+  </div>
+
+  <div class="talking-points">
+    <div class="tp-header" onclick="toggleTP('tp-current')">
+      <div class="tp-title">Talk track — current state</div>
+      <button class="tp-toggle" id="btn-tp-current">Show ▾</button>
+    </div>
+    <div class="tp-body" id="tp-current">
+      <div class="tp-section">
+        <div class="tp-section-title">Opening (lead with the frame)</div>
+        <div class="tp-text">"This is how May leads actually moved. Two lanes, left to right. Channels on the left feed both funnels. The Standard lane — the top row — is working the best it ever has. The Lite self-serve lane — the bottom row — has a structural break right in the middle."</div>
+      </div>
+      <div class="tp-section">
+        <div class="tp-section-title">Standard lane (~45 seconds)</div>
+        <div class="tp-text">"235 form submits — intentionally lower year-over-year. We rerouted T3/T4 leads away from the demo form last quarter, so the volume drop is by design. What matters is quality: T1/T2 share is now 40%, up from 20% a year ago.
+
+100 demos completed with a 47% show rate — nearly doubled year-over-year. The demo engine is the strongest it's ever been. The SMS reminder sequence Sales shipped in April lifted show rate by 10 points, and better-fit leads showing up from our improved quality filters is the upstream input.
+
+47 new Standard trialists, 33 to 34 gross new Standard logos — flat year-over-year, acceptable given the quality improvement."</div>
+      </div>
+      <div class="tp-section">
+        <div class="tp-section-title">Lite lane (~60 seconds)</div>
+        <div class="tp-text">"8,362 visits to the Lite landing page and Pricing page combined. Real traffic, real intent. The problem is what happens next.
+
+[Point to the red BREAK node]
+
+616 people submitted the screening form — and then disappeared. Only 32 reached registration. 1 opened a verification email. Zero reached payment.
+
+The screening-form gate is the break. Users complete one form, then are asked to complete another before getting into the product. They abandon. Fullstory confirmed 45 people stuck at the password step in real time.
+
+The ~50 Lite trialists you see downstream — those are coming through the Pricing page, which has a working flow. 70 completions in May at 2.15% conversion. That's the proof demand exists. The LP path is just broken."</div>
+      </div>
+      <div class="tp-qa">
+        <div class="tp-q">If challenged on conversion numbers vs Mallory:</div>
+        <div class="tp-a">Marketing reports gross new logos — first invoice paid. That's what we control. Mallory's deck uses 'held to 2nd invoice' — a CX retention signal. Both are real. Different gates, different questions. We're working on aligning to one shared definition. Until then, I'm reporting what I can defend.</div>
+      </div>
+      <div class="tp-qa">
+        <div class="tp-q">If challenged on channel attribution:</div>
+        <div class="tp-a">Channel splits are from HubSpot logo attribution. About 24% of Standard and 30% of Lite have no channel assigned — that's our UTM debt. Fixing it is on the Q3 roadmap. The directional story holds: Brand Search is the top channel for both lanes, Facebook is second, and we have real paid campaign data from Meta that confirms both lanes are being served.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 2 — FUTURE STATE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-future">
+  <div class="slide-eyebrow" style="color:#059669">Marketing · stocks &amp; flows · Q3 target</div>
+  <div class="slide-title">Future state — the fix and what it unlocks</div>
+  <div class="slide-sub">Lite LP screening-form gate replaced with gated content → nurture → trial-ready signal. Standard lane unchanged. Click any node for detail.</div>
+
+  <div class="uplift-bar">
+    <div class="uplift-item">
+      <div class="uplift-num">8,362</div>
+      <div class="uplift-label">LP + Pricing visits (same)</div>
+    </div>
+    <div class="uplift-arrow">→</div>
+    <div class="uplift-item">
+      <div class="uplift-num uplift-red">0</div>
+      <div class="uplift-label">Paid completions today</div>
+    </div>
+    <div class="uplift-arrow">→</div>
+    <div class="uplift-item">
+      <div class="uplift-num uplift-green">~2%</div>
+      <div class="uplift-label">Target conversion rate</div>
+    </div>
+    <div class="uplift-arrow">→</div>
+    <div class="uplift-item">
+      <div class="uplift-num uplift-green">~167</div>
+      <div class="uplift-label">Potential Lite trials/mo</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--blue-light);border:0.5px solid #93C5FD"></div>Standard lane (unchanged)</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--purple-light);border:0.5px solid var(--purple-border)"></div>Lite PLS lane</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#ECFDF5;border:0.5px solid #34D399"></div>New — replaces broken gate</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--green-light);border:0.5px solid var(--green-border)"></div>Converted (gross new logos)</div>
+  </div>
+
+  <div id="detail-panel-2" class="detail-panel">
+    <button class="detail-close" onclick="closeDetail(2)">✕</button>
+    <div class="detail-title" id="detail-title-2"></div>
+    <div id="detail-body-2"></div>
+  </div>
+
+  <div style="margin-bottom:8px;display:flex;gap:0;padding-left:146px">
+    <div style="flex:1;font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-light);text-align:center">Entry point</div>
+    <div style="width:20px"></div>
+    <div style="flex:1;font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-light);text-align:center">Qualify / demo</div>
+    <div style="width:20px"></div>
+    <div style="flex:1;font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-light);text-align:center">Trial</div>
+    <div style="width:20px"></div>
+    <div style="flex:1;font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-light);text-align:center">Convert</div>
+  </div>
+  <div class="stage-divider"></div>
+
+  <div class="funnel-grid">
+    <div class="channels-col">
+      <div class="channels-label">Channels</div>
+      <div class="channel-chip" style="background:white;border-color:var(--gray-200);color:var(--text)" onclick="showDetail(2,'brand')">Brand Search<br><span class="pct">Std 34% · Lite 24%</span></div>
+      <div class="channel-chip" style="background:#EEF2FF;border-color:#A5B4FC;color:#3730A3" onclick="showDetail(2,'fb')">Facebook Ads<br><span class="pct">Std 17% · Lite 18%</span></div>
+      <div class="channel-chip" style="background:var(--gray-100);border-color:var(--gray-200);color:var(--gray-600)" onclick="showDetail(2,'direct')">Direct (brand)<br><span class="pct">Std 10% · Lite 8%</span></div>
+      <div class="channel-chip" style="background:#FEF9C3;border-color:#FDE047;color:#713F12" onclick="showDetail(2,'google')">Google (Industry)<br><span class="pct">Std 7% · Lite 4%</span></div>
+      <div class="channel-chip" style="background:var(--gray-100);border-color:var(--gray-200);color:var(--text-light)" onclick="showDetail(2,'other')">Other / untracked<br><span class="pct">~24–30%</span></div>
+    </div>
+    <div class="connector-col"><div class="connector-line"></div></div>
+    <div class="lanes-col">
+      <div class="lane">
+        <div class="lane-label" style="color:var(--blue)">Standard lane — unchanged</div>
+        <div class="node-row">
+          <div class="node-box node-std" onclick="showDetail(2,'form')">
+            <div class="node-title">Form submits</div>
+            <div class="node-num">~235</div>
+            <div class="node-sub">T1/T2 = 40%<br>intentionally lower YoY</div>
+          </div>
+          <div class="arrow arrow-blue"><div class="arrow-line"></div></div>
+          <div class="node-box node-std" onclick="showDetail(2,'demo')">
+            <div class="node-title">Demo completed</div>
+            <div class="node-num">100</div>
+            <div class="node-sub">47% show rate<br>strongest ever</div>
+          </div>
+          <div class="arrow arrow-blue"><div class="arrow-line"></div></div>
+          <div class="node-box node-std" onclick="showDetail(2,'trial-std')">
+            <div class="node-title">Trial · Standard</div>
+            <div class="node-num">47</div>
+            <div class="node-sub">37 sales-led<br>10 self-serve</div>
+          </div>
+          <div class="arrow arrow-blue"><div class="arrow-line"></div></div>
+          <div class="node-box node-won" onclick="showDetail(2,'won-std')">
+            <div class="node-title">Converted</div>
+            <div class="node-num">33–34</div>
+            <div class="node-sub">Gross new logos<br>HubSpot close date</div>
+          </div>
+        </div>
+      </div>
+      <div class="lane-divider" style="border-color:#34D399"></div>
+      <div class="lane">
+        <div class="lane-label" style="color:#059669">Lite PLS lane — fixed flow</div>
+        <div class="node-row">
+          <div class="node-box node-lite" onclick="showDetail(2,'lite-entry')">
+            <div class="node-title">LP + Pricing visits</div>
+            <div class="node-num">8,362</div>
+            <div class="node-sub">Same traffic base<br>no new spend needed</div>
+          </div>
+          <div class="arrow arrow-green"><div class="arrow-line"></div></div>
+          <div class="node-box node-new" onclick="showDetail(2,'gated')">
+            <span class="badge badge-new">NEW</span>
+            <div class="node-title">Gated content</div>
+            <div class="node-num">Email capture</div>
+            <div class="node-sub">Quiz/BizPlan/checklist<br>replaces "trial now" CTA</div>
+          </div>
+          <div class="arrow arrow-green"><div class="arrow-line"></div></div>
+          <div class="node-box node-new" onclick="showDetail(2,'nurture')">
+            <span class="badge badge-new">NEW</span>
+            <div class="node-title">Nurture → signal</div>
+            <div class="node-num">Sequence</div>
+            <div class="node-sub">3-email nurture<br>trial-ready trigger</div>
+          </div>
+          <div class="arrow arrow-lite"><div class="arrow-line"></div></div>
+          <div class="node-box node-lite" onclick="showDetail(2,'trial-lite')">
+            <div class="node-title">Trial · Lite PLS</div>
+            <div class="node-num">~167</div>
+            <div class="node-sub">2% of 8,362 visits<br>directional</div>
+          </div>
+          <div class="arrow arrow-lite"><div class="arrow-line"></div></div>
+          <div class="node-box node-won" onclick="showDetail(2,'won-lite')">
+            <div class="node-title">Converted</div>
+            <div class="node-num">~40–70</div>
+            <div class="node-sub">Gross logos/mo<br>vs 22 today</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sprint-bar">
+    <strong>📍 Sprint timeline:</strong>&nbsp; Sprint 3 · Jun 9–22 → plan content offers, asset audit, decide vertical 1 (Balloon Decor) &nbsp;|&nbsp; Sprint 4 · Jun 23–Jul 6 → creative execution, email nurture build, CTA swap &nbsp;|&nbsp; Early Q3 · Jul 7 → Lite LP live with gated content, nurture triggered, measure lift
+  </div>
+
+  <div class="footnote">
+    <strong>Conversion:</strong> Gross new logos — first invoice paid, HubSpot close date. Marketing owns gross; CX owns retention past 2nd invoice. Shared definition reconciliation in progress. &nbsp;<strong>~167 trials/mo</strong> modelled on Pricing page's validated 2.15% rate × 8,362 visits — directional only.
+  </div>
+
+  <div class="talking-points">
+    <div class="tp-header" onclick="toggleTP('tp-future')">
+      <div class="tp-title">Talk track — future state</div>
+      <button class="tp-toggle" id="btn-tp-future">Show ▾</button>
+    </div>
+    <div class="tp-body" id="tp-future">
+      <div class="tp-section">
+        <div class="tp-section-title">Opening (connect to previous slide)</div>
+        <div class="tp-text">"The previous slide showed the break. This slide shows the fix — and what the numbers look like when it ships. Nothing changes in the Standard lane. That's the point — the Standard funnel is working and we're not touching it. What changes is the entire Lite self-serve path."</div>
+      </div>
+      <div class="tp-section">
+        <div class="tp-section-title">The fix (~60 seconds on the two new nodes)</div>
+        <div class="tp-text">"Instead of routing visitors to a 'start trial now' CTA that breaks on a screening form, we replace it with gated content — a quiz, a business plan template, or a setup checklist. The visitor gets something valuable. We capture their email.
+
+Then we put them into a 3-email nurture sequence. When they show trial-ready signals — opens, clicks, engagement — we route them to trial.
+
+This isn't hypothetical. We have almost all the assets already: Annabelle's quiz with a 3-email nurture already built, five resource guides from 2024, Rylan's partner checklist. Net-new content only where needed.
+
+Sprint 3 starts today — we're planning the content offers and picking vertical 1. Sprint 4 builds and wires it. July 7 it goes live."</div>
+      </div>
+      <div class="tp-section">
+        <div class="tp-section-title">The numbers (uplift bar at top)</div>
+        <div class="tp-text">"Same 8,362 visits. No new spend required. We go from 0 paid completions to a target ~2% conversion — that's the Pricing page's validated rate, which we know works because 70 people completed it in May. Apply that to all 8,362 visits and you get ~167 Lite trials per month. At current trial-to-won rates, that's 40 to 70 gross new Lite logos per month versus 22 today.
+
+The ~167 is directional. Actual rate depends on content offer quality and nurture effectiveness. But the floor is real because the Pricing page already proves the demand."</div>
+      </div>
+      <div class="tp-qa">
+        <div class="tp-q">If asked: "Is the 2% conversion rate realistic?"</div>
+        <div class="tp-a">It's not a projection — it's an observed rate from the Pricing page, which had 70 completions out of 3,258 visits in May. We're applying a known working rate to a larger traffic base. If the gated content converts better, we beat 167. If worse, we land lower. Either way, we go from zero to something.</div>
+      </div>
+      <div class="tp-qa">
+        <div class="tp-q">If asked: "How confident are you in the July 7 date?"</div>
+        <div class="tp-a">Confident in the sprint structure — Sprint 3 and 4 are planned and staffed. July 7 is the Lite LP going live with gated content and nurture triggered. We'll have early data on start-of-flow lift before the August report.</div>
+      </div>
+      <div class="tp-qa">
+        <div class="tp-q">If Alison raises CX coverage capacity:</div>
+        <div class="tp-a">More Lite trialists flowing in is a good problem to have — but it does mean CX will need to prioritise which accounts to touch. Alison's data shows CX reaches about 10% of their active book per month. The fix opens the tap; CX coverage is the downstream constraint. That's a Q3 planning conversation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const D1 = {
+  brand: {t:'Brand Search', b:'<strong>Standard:</strong> 34% of May logos — largest single channel. Driven by SEO, direct brand queries, and Google brand campaigns.<br><br><strong>Lite:</strong> 24% of May Lite users (12 of 49). Brand awareness is the top organic driver for both lanes. Reinforces the SEO/brand thesis as the durable long-term driver.'},
+  fb: {t:'Facebook Ads', b:'<strong>Standard:</strong> 17% of logos. ~14 validated Tier 1/2/3 demo form leads in May. $47,685 spend on Standard prospecting campaigns targeting Events/Tents/Florist verticals.<br><br><strong>Lite:</strong> 18% of May Lite users (9 of 49). $12,907 on Lite PLS campaigns. 51 "New User Registered" events tracked — most hit the broken screening-form wall.'},
+  direct: {t:'Direct (brand)', b:'Users arriving via direct URL or bookmarked links — strong brand recall signal. 10% of Standard logos, 8% of Lite users in May. Not a paid channel — no CPL to report.'},
+  google: {t:'Google (Industry)', b:'Includes Google Industry, DSA, and PMax campaigns. 7% of Standard logos, 4–7% of Lite users. Full Google Ads data pending Supermetrics account reconnection.'},
+  other: {t:'Other / untracked', b:'<strong>Standard:</strong> 24% of logos have no UTM attribution — reported as "Other" in HubSpot.<br><br><strong>Lite:</strong> ~30% untracked (16% "Other" + 14% no value). This is the UTM debt problem — fixing attribution standards is a Q3 priority before August reporting.'},
+  form: {t:'Form submits · Standard', b:'235 fresh form submits in May (vs 252 April, 415 May \'25). The YoY decline is <strong>intentional</strong> — the Q4 \'25 reroute moved T3/T4 leads away from the paid form to a direct trial path. T1/T2 share is now 40% (was 20% May \'25). The −42% YoY needs workflow change-log validation before it\'s a public claim.'},
+  demo: {t:'Demo completed · Standard', b:'100 demos in May — show rate 47% (was 24% May \'25, +23pp YoY). Two drivers: (1) SMS reminder sequence from Sales lifted show rate 43%→53%. (2) Better-fit T1/T2 leads show up more reliably. First demos: 69 completed of 158 scheduled. Rebooked: 31 of 56 scheduled.'},
+  'trial-std': {t:'Trial · Standard', b:'47 new Standard trialists in May (37 sales-influenced, 10 self-serve). Up from 37 in April (+10). Still trialing at month end: 33 (20 Standard).'},
+  'won-std': {t:'Converted · Standard — gross new logos', b:'33–34 gross new Standard logos in May (HubSpot deal close date basis). Flat YoY vs 34 May \'25.<br><br><strong>Definition note:</strong> Marketing reports gross — first invoice paid. Sales "held to 2nd invoice" definition shows 18 sales-influenced Standard logos on that stricter basis. Both are real; they measure different things. Reconciliation in progress.'},
+  'lite-entry': {t:'LP + Pricing page visits', b:'5,104 visits to the Lite landing page + 3,258 visits to the Pricing page = 8,362 total self-serve entry visits in May.<br><br>The Pricing page is the <strong>healthy path</strong> — 70 completions at 2.15% conversion. The Lite LP is the <strong>broken path</strong> — 0 paid completions despite 5,104 visits.'},
+  break: {t:'The break — screening form gate', b:'<strong>What happens:</strong> 616 people submitted the screening form, then disappeared before reaching registration (−88% drop). Only 32 reached registration, 1 opened verification email, 0 reached payment.<br><br><strong>Two hypotheses:</strong><br>1. UX fatigue — users see another form after screening and abandon.<br>2. Technical — redirect from form to registration is slow or broken. Fullstory confirms 45 visitors stuck at the password step.<br><br><strong>Fix:</strong> Kill the screening-form gate. Product decision — Q2 scope.'},
+  'trial-lite': {t:'Trial · Lite PLS', b:'~50 Lite PLS trialists in May — largely coming through the Pricing page path (which works), not the broken Lite LP. Attribution is heavily unassigned. Brand Search accounts for 13 trial starts, Facebook Ads 5, 46 unassigned.'},
+  'won-lite': {t:'Converted · Lite PLS — gross new logos', b:'22 gross new Lite PLS logos in May (HubSpot deal close date basis).<br><br><strong>Definition note:</strong> Marketing reports gross. Mallory\'s "held to 2nd invoice" definition shows 17 self-serve Lite — a 5-unit gap. Marketing owns gross; retention past 2nd invoice is downstream. This number should multiply significantly once the screening-form gate is removed.'},
+};
+
+const D2 = {
+  brand: D1.brand,
+  fb: {t:'Facebook Ads — future state', b:'$63,974 total May spend. $49,571 Standard prospecting, $12,907 Lite PLS. In the future state, Lite campaigns will point to the <strong>gated content CTA</strong> rather than the broken "trial now" flow — same spend, dramatically better conversion path. Cost per Lite registration should drop significantly once the gate is fixed.'},
+  direct: D1.direct,
+  google: D1.google,
+  other: D1.other,
+  form: {t:'Form submits · Standard (unchanged)', b:'235 form submits. Intentionally lower YoY — the reroute moved T3/T4 to trial path. T1/T2 share 40% (was 20%). Standard lane performance is <strong>strong and unchanged</strong> by the Lite fix.'},
+  demo: {t:'Demo completed · Standard (unchanged)', b:'100 demos, 47% show rate — the conversion engine is the strongest it has ever been. This lane is working. The Lite fix does not touch it.'},
+  'trial-std': {t:'Trial · Standard (unchanged)', b:'47 new Standard trialists. 37 sales-led, 10 self-serve. Healthy and unchanged in the future state.'},
+  'won-std': {t:'Converted · Standard — gross new logos', b:'33–34 gross Standard logos. Flat YoY. The trial→won rate dropped 22pp MoM (78%→56%) — worth watching but not the focus of the Lite fix. Standard lane is not what we\'re changing.'},
+  'lite-entry': {t:'LP + Pricing visits — same traffic base', b:'Same 8,362 visits — no new traffic spend required to unlock the Lite opportunity. The fix is entirely structural: replacing what happens <em>after</em> a visitor arrives. The Pricing page already proves demand exists (70 completions at 2.15%).'},
+  gated: {t:'Gated content — replaces "trial now" CTA', b:'Instead of "start trial now" (routes to broken screening form), the CTA becomes a content offer — a quiz, business plan template, or setup checklist.<br><br><strong>Assets ready to repurpose:</strong> Annabelle quiz (3-email nurture already built), 5 resource guides from 2024, Rylan partner checklist, business plan template. Net-new only where needed.<br><br><strong>Sprint 3 (Jun 9–22):</strong> Plan content offers, asset audit, decide vertical 1 (Balloon Decor).'},
+  nurture: {t:'Nurture sequence → trial-ready signal', b:'3-email nurture triggered by content download. Moves prospect from awareness to trial-ready.<br><br>Phase 1: General nurture (repurposed existing assets). Phase 2: Vertical-specific nurture.<br><br><strong>Partner leverage:</strong> Lanielle (YES Decor course) co-webinar + Lite prospects. Ambassador referral path reactivation.<br><br><strong>Sprint 4 (Jun 23–Jul 6):</strong> Creative execution, email nurture build, CTA swap. <strong>Jul 7:</strong> Live with gated content, nurture triggered, measure lift in start-of-flow.'},
+  'trial-lite': {t:'Trial · Lite PLS — modelled', b:'~167 trials/mo modelled by applying the Pricing page\'s validated 2.15% conversion rate to 8,362 total LP+Pricing visits. Directional target — actual rate depends on content offer quality and nurture effectiveness.<br><br>Current broken rate: ~50 trials/mo (Pricing page bypass only). At fixed rate: potentially 3× uplift from same traffic.'},
+  'won-lite': {t:'Converted · Lite PLS — potential', b:'~40–70 gross new Lite logos/mo modelled at 25–40% trial→won rate applied to ~167 trials. Directional only.<br><br>At 22 today without a working flow, fixing the gate is the single highest-leverage action available. PLG is already 6% of total logos and converting without a working Lite LP.<br><br><strong>CX coverage note:</strong> Alison\'s data shows CX reaches ~10% of their active book monthly. More Lite trialists flowing in will require CX prioritisation to maintain conversion rates at scale — a Q3 planning conversation.'},
+};
+
+function showDetail(slideNum, key) {
+  const map = slideNum === 1 ? D1 : D2;
+  const d = map[key];
+  if (!d) return;
+  document.getElementById('detail-title-' + slideNum).textContent = d.t;
+  document.getElementById('detail-body-' + slideNum).innerHTML = d.b;
+  const panel = document.getElementById('detail-panel-' + slideNum);
+  panel.classList.add('open');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function closeDetail(n) {
+  document.getElementById('detail-panel-' + n).classList.remove('open');
+}
+
+function showSlide(id) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('slide-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleTP(id) {
+  const body = document.getElementById(id);
+  const btn = document.getElementById('btn-' + id);
+  const isOpen = body.classList.toggle('open');
+  btn.textContent = isOpen ? 'Hide ▴' : 'Show ▾';
+}
+</script>
+</body>
+</html>
